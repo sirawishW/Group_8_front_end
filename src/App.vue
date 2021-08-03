@@ -2,38 +2,39 @@
   <v-app>
     <v-app-bar
       app
-      color="primary"
+      color="#001E6C"
       dark
+      flat
+      class="nav-bar"
+      height="50px"
     >
       <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
+       <v-icon large>mdi-music-accidental-sharp</v-icon><h3>Music Hub</h3>
       </div>
 
       <v-spacer></v-spacer>
-          
+
+      <div>|</div>
       <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
+        href=""
+        icon
+      ><v-icon>mdi-gamepad-square</v-icon>
+      </v-btn>
+        <v-btn
+        href=""
+        icon
+      ><v-icon>mdi-shopping</v-icon>
+      </v-btn>
+        <v-btn
+        href=""
+        icon
+      ><v-icon>mdi-trophy-variant</v-icon>
+      </v-btn>
+      <div>|</div>
+              <v-btn
+        href=""
+        icon
+      ><v-icon>mdi-account-circle</v-icon>
       </v-btn>
     </v-app-bar>
 
@@ -52,3 +53,5 @@ export default {
   }),
 };
 </script>
+<style scoped>
+</style>
