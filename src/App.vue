@@ -20,16 +20,31 @@
         icon
       ><v-icon>mdi-gamepad-square</v-icon>
       </v-btn>
+      <v-btn
+        href=""
+        icon
+      ><v-icon>mdi-piano</v-icon>
+      </v-btn>
+      <router-link
+        to="/shop"
+        tag="v-btn"
+      >
         <v-btn
         href=""
         icon
       ><v-icon>mdi-shopping</v-icon>
       </v-btn>
+      </router-link>
+      <router-link
+        to="/leaderboard"
+        tag="v-btn"
+      >
         <v-btn
         href=""
         icon
       ><v-icon>mdi-trophy-variant</v-icon>
       </v-btn>
+      </router-link>
       <div>|</div>
               <v-btn
         href=""
