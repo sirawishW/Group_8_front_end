@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Leaderboard</h1>
+        <h1>ตารางคะเเนน</h1>
        <LeaderboardList />
     </div>
 </template>
