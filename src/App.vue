@@ -18,20 +18,20 @@
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
           <v-btn to="" icon v-bind="attrs" v-on="on"
-            ><v-icon>mdi-gamepad-square</v-icon>
+            ><v-icon>mdi-piano</v-icon>
           </v-btn> </template
-        ><span>เกม</span></v-tooltip
+        ><span>มินิเกมเปียโน</span></v-tooltip
       >
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn to="" icon v-bind="attrs" v-on="on"
+          <v-btn to="/shop" icon v-bind="attrs" v-on="on"
             ><v-icon>mdi-shopping</v-icon>
           </v-btn> </template
         ><span>แลกคะแนน</span></v-tooltip
       >
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn to="" icon v-bind="attrs" v-on="on"
+          <v-btn to="/leaderboard" icon v-bind="attrs" v-on="on"
             ><v-icon>mdi-trophy-variant</v-icon>
           </v-btn> </template
         ><span>ตารางคะแนน</span></v-tooltip
