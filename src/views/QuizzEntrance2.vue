@@ -1,11 +1,10 @@
 <template>
   <div class="quizz_entrance">
     <div v-if="started">
-      <quizcompo :question_array="data_array[`question_${quest}`]" />
+      <quizcompo :question_array="data_array[`question_2`]" />
     </div>
     <div v-else>
       <h2>ยินดีต้อนรับสู่แบบทดสอบ ! พร้อมกันหรือยัง !?</h2>
-      <button @click="started = true; quest = 1">แบบทดสอบ ชุดที่ 1</button>
       <button @click="started = true; quest = 2">แบบทดสอบ ชุดที่ 2</button>
     </div>
   </div>

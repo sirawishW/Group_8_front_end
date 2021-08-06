@@ -5,7 +5,8 @@ import Leaderboard from '../views/LeaderboardUI.vue'
 import Shop from '../views/ShopUI.vue'
 import Numalee from '../views/Numalee.vue'
 import JingleBell from '../views/JingleBell.vue'
-import QuizzEntrance from '../views/QuizzEntrance.vue'
+import QuizzEntrance1 from '../views/QuizzEntrance1.vue'
+import QuizzEntrance2 from '../views/QuizzEntrance2.vue'
 import Quizz from '../views/Quizz.vue'
 import Note from '../views/Note.vue'
 
@@ -36,9 +37,14 @@ const routes = [
     component: Numalee
   },
   {
-    path: '/quizz_entrance',
-    name: 'QuizzEntrance',
-    component: QuizzEntrance
+    path: '/quizz_entrance1',
+    name: 'QuizzEntrance1',
+    component: QuizzEntrance1
+  },
+  {
+    path: '/quizz_entrance2',
+    name: 'QuizzEntrance2',
+    component: QuizzEntrance2
   },
   {
     path: '/quizz',
