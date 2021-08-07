@@ -10,7 +10,8 @@
             </thead>
             <tbody class="body">
                 <tr v-for="(dat, index) in data" :key="index">
-                    <td class="text-left">{{ index+1 }}</td>
+                    <td v-if="index === 0"><v-img :src="require('@/assets/rankOne.png')" height="40" width="40"></v-img></td>
+                    <td v-else class="text-left">{{ index+1 }}</td>
                     <td class="text-left">{{ dat.user }}</td>
                     <td>{{ dat.score }}</td>
                 </tr>
@@ -36,19 +37,19 @@ export default{
         data: [
             {
                 user: 'A',
-                score: 3000
+                score: 445
             },
             {
                 user: 'B',
-                score: 2500
+                score: 300
             },
             {
                 user: 'C',
-                score: 1050
+                score: 225
             },
             {
                 user: 'D',
-                score: 1050
+                score: 200
             }
         ]
     }

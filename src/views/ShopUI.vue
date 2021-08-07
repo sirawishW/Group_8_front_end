@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h1>เเลกคะเเนน</h1>
-        <p>คุณมีคะเเนนสะสม ... คะเเนน</p>
+        <h1 class="head">เเลกคะเเนน</h1>
+        <p class="display">คุณมีคะเเนนสะสม ... คะเเนน</p>
         <shop-table></shop-table>
     </div>
 </template>
@@ -15,6 +15,9 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.head, .display{
+    text-align: center;
+    padding: 15px;
+}
 </style>
