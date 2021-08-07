@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>Leaderboard</h1>
+        <h1 class="head">ตารางคะเเนน</h1>
        <LeaderboardList />
     </div>
 </template>
@@ -14,6 +14,9 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+.head{
+    text-align: center;
+    padding: 20px;
+}
 </style>

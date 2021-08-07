@@ -17,7 +17,7 @@
       <div>|</div>
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn to="" icon v-bind="attrs" v-on="on"
+          <v-btn to="/note" icon v-bind="attrs" v-on="on"
             ><v-icon>mdi-piano</v-icon>
           </v-btn> </template
         ><span>มินิเกมเปียโน</span></v-tooltip

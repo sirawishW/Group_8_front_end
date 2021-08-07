@@ -3,16 +3,17 @@
         <v-simple-table>
             <thead class="head">
                 <tr>
-                    <th class="text-left">#</th>
-                    <th class="text-left">User</th>
-                    <th>Score</th>
+                    <th class="text-left">อันดับ</th>
+                    <th class="text-left">ชื่อผู้ใช้</th>
+                    <th>คะเเนน</th>
                 </tr>
             </thead>
             <tbody class="body">
-                <tr v-for="item in dat" :key="item.name">
-                    <td class="text-left">{{ item.index }}</td>
-                    <td class="text-left">{{ item.user }}</td>
-                    <td>{{ item.score }}</td>
+                <tr v-for="(dat, index) in data" :key="index">
+                    <td v-if="index === 0"><v-img :src="require('@/assets/rankOne.png')" height="40" width="40"></v-img></td>
+                    <td v-else class="text-left">{{ index+1 }}</td>
+                    <td class="text-left">{{ dat.user }}</td>
+                    <td>{{ dat.score }}</td>
                 </tr>
             </tbody>
         </v-simple-table>
@@ -33,25 +34,30 @@
 export default{
   data(){
     return{
-        dat: [
+        data: [
             {
-                index: 1,
                 user: 'A',
-                score: 2000
+                score: 445
             },
             {
-                index: 2,
                 user: 'B',
-                score: 3000
+                score: 300
             },
             {
-                index: 3,
                 user: 'C',
-                score: 4000
+                score: 225
             },
+            {
+                user: 'D',
+                score: 200
+            }
         ]
     }
   },
+  method:{
+  },
+  computed:{
+  }
 
 }
 </script>
