@@ -116,9 +116,6 @@ this.getData()
     async getData(){
       await connectAPI.getAPI("users").then((res) => {
         this.testData = res
-        
-        console.log("function run :");
-        console.log(this.testData);
       })
     }
   }
