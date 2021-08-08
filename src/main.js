@@ -3,6 +3,11 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
+import VueYoutube from 'vue-youtube'
+import VueDraggable from 'vue-draggable'
+
+Vue.use(VueDraggable)
+Vue.use(VueYoutube)
 
 Vue.config.productionTip = false
 

@@ -113,7 +113,6 @@
               background-color="white"
             ></v-text-field>
             <div class="ml-2">
-              
               <v-btn
                 color="#690D90"
                 dark
@@ -121,13 +120,13 @@
                 class="ml-16 mt-2"
                 v-if="typeOfDialog == 'login'"
                 @click="login"
-                ><div v-if="!progessBtn">เข้าสู่ระบบ</div> 
+                ><div v-if="!progessBtn">เข้าสู่ระบบ</div>
                 <v-progress-circular
-              v-else
-      indeterminate
-      color="white"
-      size="20"
-    ></v-progress-circular></v-btn
+                  v-else
+                  indeterminate
+                  color="white"
+                  size="20"
+                ></v-progress-circular></v-btn
               ><v-btn
                 color="#690D90"
                 dark
@@ -135,13 +134,13 @@
                 class="ml-16 mt-2"
                 v-if="typeOfDialog == 'regis'"
                 @click="register"
-                ><div v-if="!progessBtn">ลงทะเบียน</div> 
+                ><div v-if="!progessBtn">ลงทะเบียน</div>
                 <v-progress-circular
-              v-else
-      indeterminate
-      color="white"
-      size="20"
-    ></v-progress-circular></v-btn
+                  v-else
+                  indeterminate
+                  color="white"
+                  size="20"
+                ></v-progress-circular></v-btn
               ><v-btn @click="cancelForm" class="mt-2" text>ยกเลิก</v-btn>
             </div>
           </v-form>
@@ -257,8 +256,8 @@ export default {
        this.snackbar = true;
     },
     async register() {
-      var newrole = ''
-      var id = ''
+      var newrole = "";
+      var id = "";
       if (this.$refs.form.validate()) {
         this.progessBtn = true;
         var username = this.email.split('@')

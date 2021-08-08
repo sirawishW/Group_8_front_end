@@ -54,24 +54,10 @@
         เข้าสู่เนื้อหา
       </v-btn>
     </v-card-actions>
-          <v-row
-            class="fill-height"
-            align="center"
-            justify="center"
-          >
-            <v-scale-transition>
-              <v-icon
-                v-if="active"
-                color="white"
-                size="48"
-                v-text="'mdi-close-circle-outline'"
-              ></v-icon>
-            </v-scale-transition>
-          </v-row>
-        </v-card>
-      </v-slide-item>
-    </v-slide-group>
-  </v-sheet>
+              </v-card>
+            </v-slide-item>
+          </v-slide-group>
+        </v-sheet>
       </v-col>
     </v-row>
     <v-row class="text-center">
@@ -137,10 +123,10 @@
               ></v-icon>
             </v-scale-transition>
           </v-row>
-        </v-card>
-      </v-slide-item>
-    </v-slide-group>
-  </v-sheet>
+              </v-card>
+            </v-slide-item>
+          </v-slide-group>
+        </v-sheet>
       </v-col>
     </v-row>
   </v-container>
@@ -148,8 +134,8 @@
 
 <script>
 import connectAPI from "@/services/connectAPI";
-  export default {
-    name: 'HomePage',
+export default {
+  name: "HomePage",
 
     data: () => ({
       url : "http://localhost:8082",
@@ -175,6 +161,6 @@ this.getLessons()
       this.$store.commit("setDataLesson", false);
       this.$router.push("/lesson");
     }
-  }
-  }
+  },
+};
 </script>
