@@ -181,6 +181,7 @@ export default {
 
   methods: {
     logout() {
+      connectAPI.logout();
       location.reload();
       this.checkIfLogin();
     },

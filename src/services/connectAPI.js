@@ -18,7 +18,7 @@ export default{
         return axios.get(url + path 
             , {
             headers: {
-              Authorization: "Bearer " + this.token
+              Authorization: "Bearer " + localStorage.getItem("me")
             }
         }
         ).then((res) => {
@@ -45,6 +45,7 @@ export default{
         }
         ).then((res) => {
             this.token = res.data.jwt;
+            localStorage.setItem("me", this.token)
             return res.data;
         });
     },
@@ -54,4 +55,8 @@ export default{
             return res.data;
         });
     },
+    logout(){
+        localStorage.removeItem("me")
+        this.token = '';
+    }
 }
