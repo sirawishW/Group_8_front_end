@@ -34,7 +34,7 @@
                 <v-card>
                     <v-card-title>ยืนยันการเเลก</v-card-title>
                     <v-card-text>คุณจะถูกหัก {{ point_cost }} คะเเนน โดยสินค้าที่คุณเลือกคือ {{ item_name }}</v-card-text>
-                    <v-btn color="primary" text @click="dialog = false">ยืนยัน</v-btn>
+                    <v-btn color="primary" text @click="calPoint()">ยืนยัน</v-btn>
                     <v-btn color="primaty" text @click="dialog = false">ยกเลิก</v-btn>
                 </v-card>
             </v-dialog>
@@ -68,8 +68,18 @@ export default{
             await connectAPI.getAPIWithToken("users/me").then((res) =>{
                 this.user_point = res.point
             })
-        } 
-    }
+        },
+        calPoint(){
+            if(this.user_point < this.point_cost){
+               alert("คะเเนนของคุณไม่เพียงพอ")
+               this.dialog = false
+            }
+            else{
+                alert("เเลกเปลี่ยนสำเร็จ")
+                this.dialog = false
+            }
+        }
+    },
 }
 </script>
 <style lang="scss" scoped>

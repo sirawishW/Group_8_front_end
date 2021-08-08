@@ -184,6 +184,7 @@ export default {
       connectAPI.logout();
       location.reload();
       this.checkIfLogin();
+      alert("ออกจากระบบสำเร็จ")
     },
     async register() {
       var newrole = "";
