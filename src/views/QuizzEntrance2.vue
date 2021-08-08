@@ -4,8 +4,22 @@
       <quizcompo :question_array="data_array[`question_2`]" />
     </div>
     <div v-else>
+
+    <div class="header">
       <h2>ยินดีต้อนรับสู่แบบทดสอบ ! พร้อมกันหรือยัง !?</h2>
-      <button @click="started = true; quest = 2">แบบทดสอบ ชุดที่ 2</button>
+    </div>
+
+      <div class="center">
+          <div id="container">
+            <button @click="started = true; quest = 2"><img src="@/assets/9.png" ></button>
+          </div>
+        </div>
+
+      <div class="header">
+          <h2></h2>&nbsp; &nbsp; &nbsp;&nbsp;
+          <h2>แบบทดสอบ ชุดที่ 2</h2>
+      </div>
+
     </div>
   </div>
 </template>
@@ -28,3 +42,24 @@ export default {
 
 }
 </script>
+
+<style scoped>
+  .center {
+    display: flex;
+    justify-content: center;
+
+  }
+
+  .header {
+    display: flex;
+    justify-content: center;
+    padding: 2.5%;
+
+  }
+
+  #container:hover img {
+    transform: scale(1.2, 1.2);
+    z-index: 9;
+  }
+
+</style>

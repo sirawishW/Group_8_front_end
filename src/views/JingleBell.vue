@@ -1,6 +1,11 @@
 <template>
   <div class="jingle-bell">
     <h1>Jingle Bell</h1>
+
+    <audio autoplay>
+      <source src="@/assets/Jingle.mp3" type="audio/ogg">
+    </audio>
+
     <div class="main">
       <div class="notepad" v-for="(_,index) in music" :key="index">
         <div class="colume" v-for="(v,index_colume) in _.colums" :key="index_colume" :style="'margin-right:' + v.marginRight + 'px'">

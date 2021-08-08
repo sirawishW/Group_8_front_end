@@ -69,7 +69,9 @@
         v-for="n in 15"
         :key="n"
         v-slot="{ active, toggle }"
+        
       >
+      
         <v-card
           :color="active ? 'primary' : 'grey lighten-1'"
           class="ma-6"
@@ -81,14 +83,21 @@
             class="fill-height"
             align="center"
             justify="center"
+            
           >
+
+          
             <v-scale-transition>
               <v-icon
                 v-if="active"
                 color="white"
                 size="48"
                 v-text="'mdi-close-circle-outline'"
+                
               ></v-icon>
+              
+              <router-link to="/quizz_entrance2">แบบทดสอบ ชุดที่1</router-link>
+              
             </v-scale-transition>
           </v-row>
         </v-card>
@@ -116,6 +125,9 @@ this.getData()
     async getData(){
       await connectAPI.getAPI("users").then((res) => {
         this.testData = res
+        
+        console.log("function run :");
+        console.log(this.testData);
       })
     }
   }
