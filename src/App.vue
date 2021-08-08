@@ -113,7 +113,6 @@
               background-color="white"
             ></v-text-field>
             <div class="ml-2">
-              
               <v-btn
                 color="#690D90"
                 dark
@@ -121,13 +120,13 @@
                 class="ml-16 mt-2"
                 v-if="typeOfDialog == 'login'"
                 @click="login"
-                ><div v-if="!progessBtn">เข้าสู่ระบบ</div> 
+                ><div v-if="!progessBtn">เข้าสู่ระบบ</div>
                 <v-progress-circular
-              v-else
-      indeterminate
-      color="white"
-      size="20"
-    ></v-progress-circular></v-btn
+                  v-else
+                  indeterminate
+                  color="white"
+                  size="20"
+                ></v-progress-circular></v-btn
               ><v-btn
                 color="#690D90"
                 dark
@@ -135,13 +134,13 @@
                 class="ml-16 mt-2"
                 v-if="typeOfDialog == 'regis'"
                 @click="register"
-                ><div v-if="!progessBtn">ลงทะเบียน</div> 
+                ><div v-if="!progessBtn">ลงทะเบียน</div>
                 <v-progress-circular
-              v-else
-      indeterminate
-      color="white"
-      size="20"
-    ></v-progress-circular></v-btn
+                  v-else
+                  indeterminate
+                  color="white"
+                  size="20"
+                ></v-progress-circular></v-btn
               ><v-btn @click="cancelForm" class="mt-2" text>ยกเลิก</v-btn>
             </div>
           </v-form>
@@ -160,7 +159,7 @@ export default {
   name: "App",
 
   data: () => ({
-    valid: '',
+    valid: "",
     showComfirmPassword: false,
     showPassword: false,
     checkData: "",
@@ -181,25 +180,33 @@ export default {
   }),
 
   methods: {
-    logout(){
+    logout() {
       location.reload();
       this.checkIfLogin();
     },
     async register() {
-      var newrole = ''
-      var id = ''
+      var newrole = "";
+      var id = "";
       if (this.$refs.form.validate()) {
         this.progessBtn = true;
-        var username = this.email.split('@')
-        await connectAPI.registerUser(username[0], this.email, this.password).then((res) => {
-          id = res.user.id;
-        })
-        await connectAPI.getAPI("users-permissions/roles/4").then((res) => {newrole = res.role})
-        await connectAPI.putAPI("users/" + id, {role : newrole}).then((res) => { this.dialog = false;
-          this.progessBtn = false;
-          this.email = "";
-          this.password = "";
-          this.checkPassword = ""; })
+        var username = this.email.split("@");
+        await connectAPI
+          .registerUser(username[0], this.email, this.password)
+          .then((res) => {
+            id = res.user.id;
+          });
+        await connectAPI.getAPI("users-permissions/roles/4").then((res) => {
+          newrole = res.role;
+        });
+        await connectAPI
+          .putAPI("users/" + id, { role: newrole })
+          .then((res) => {
+            this.dialog = false;
+            this.progessBtn = false;
+            this.email = "";
+            this.password = "";
+            this.checkPassword = "";
+          });
       }
     },
     async login() {
@@ -211,8 +218,7 @@ export default {
           this.email = "";
           this.password = "";
           this.checkIfLogin();
-        })
-        
+        });
       }
     },
     async checkIfLogin() {
