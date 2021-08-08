@@ -194,19 +194,25 @@ export default {
           .registerUser(username[0], this.email, this.password)
           .then((res) => {
             id = res.user.id;
-          });
-        await connectAPI.getAPI("users-permissions/roles/4").then((res) => {
-          newrole = res.role;
-        });
-        await connectAPI
-          .putAPI("users/" + id, { role: newrole })
-          .then((res) => {
-            this.dialog = false;
-            this.progessBtn = false;
+            this.progessBtn = false
+            alert("ลงทะเบียนสำเร็จ")
+            this.dialog = false
             this.email = "";
             this.password = "";
             this.checkPassword = "";
           });
+        // await connectAPI.getAPIWithToken("users-permissions/roles/4").then((res) => {
+        //   newrole = res.role;
+        // });
+        // await connectAPI
+        //   .putAPI("users/" + id, { role: newrole })
+        //   .then((res) => {
+        //     this.dialog = false;
+        //     this.progessBtn = false;
+        //     this.email = "";
+        //     this.password = "";
+        //     this.checkPassword = "";
+        //   });
       }
     },
     async login() {
