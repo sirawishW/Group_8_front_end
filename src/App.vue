@@ -58,7 +58,7 @@
             >
           </v-list-item>
           <v-list-item v-if="checkData">
-            <v-list-item-title><v-btn text>โปรไฟล์</v-btn></v-list-item-title>
+            <v-list-item-title><v-btn text @click="drawer=true, checkIfLogin()">โปรไฟล์</v-btn></v-list-item-title>
           </v-list-item>
           <v-list-item v-if="checkData">
             <v-list-item-title
@@ -148,7 +148,72 @@
         </div></v-card
       >
     </v-dialog>
-    <v-main>
+     <v-navigation-drawer
+      v-model="drawer"
+      absolute
+      right
+    ><v-list class="pt-7">
+      <v-icon @click="drawer = false" class="pt-8" style="padding-left: 83%" right>mdi-close</v-icon>
+      <v-list-item class="px-2 d-flex justify-center">
+            <v-list-item-avatar color="green" class="mt-1 ml-2" size="50">
+             <h1 v-if="this.checkData">{{ this.checkData.username.charAt().toUpperCase() }}</h1> 
+  </v-list-item-avatar>
+          </v-list-item>
+              
+
+          <v-list-item>
+            <v-list-item-content >
+              <v-list-item-title class="text-h6 d-flex justify-center">
+                {{ this.checkData.username }}
+              </v-list-item-title>
+              <v-list-item-subtitle class="d-flex justify-center"> {{ this.checkData.email }}</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+
+        <v-divider></v-divider>
+
+        <v-list
+          nav
+          dense
+        >
+          <v-list-item>
+            <v-list-item-title class="d-flex justify-center">คะแนน : {{this.checkData.point ? this.checkData.point : 0}}</v-list-item-title>
+          </v-list-item>
+          <v-list-item >
+            <v-list-item-title class="d-flex justify-center">อันดับคะแนน : </v-list-item-title>
+          </v-list-item>
+          <v-list-item >
+            <v-list-item-title class="d-flex justify-center">เนื้อหาที่ผ่านการเรียนแล้ว</v-list-item-title>
+          </v-list-item>
+        </v-list>
+     </v-navigation-drawer>
+     <v-snackbar
+      v-model="snackbar"
+      top
+    >
+      {{ text }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="pink"
+          v-if="typeOfDialog == 'regis'"
+          v-bind="attrs"
+          @click="typeOfDialog = 'login', dialog = true;"
+        >
+          เข้าสู่ระบบ
+        </v-btn>
+        <v-btn
+          color="pink"
+          text
+          v-bind="attrs"
+          @click="snackbar = false"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <v-main class="bg">
       <router-view />
     </v-main>
   </v-app>
@@ -161,6 +226,7 @@ export default {
 
   data: () => ({
     valid: '',
+    drawer: false,
     showComfirmPassword: false,
     showPassword: false,
     checkData: "",
@@ -171,6 +237,8 @@ export default {
     checkPassword: "",
     email: "",
     progessBtn: false,
+    text: '',
+    snackbar: false,
     emailRules: [
       (v) => !!v || "กรุณาใส่อีเมล",
       (v) => /.+@.+\..+/.test(v) || "กรุณาใส่อีเมลให้ถูกต้อง",
@@ -182,8 +250,11 @@ export default {
 
   methods: {
     logout(){
-      location.reload();
+      location.reload()
       this.checkIfLogin();
+      this.drawer = false;
+      this.text = "ออกจากระบบเรียบร้อย"
+       this.snackbar = true;
     },
     async register() {
       var newrole = ''
@@ -199,7 +270,10 @@ export default {
           this.progessBtn = false;
           this.email = "";
           this.password = "";
-          this.checkPassword = ""; })
+          this.checkPassword = "";
+          this.text = "ลงทะเบียนเรียบร้อย";
+          this.snackbar = true;
+          this.$refs.form.reset() })
       }
     },
     async login() {
@@ -211,6 +285,9 @@ export default {
           this.email = "";
           this.password = "";
           this.checkIfLogin();
+          this.text = "เข้าสู่ระบบเรียบร้อย"
+          this.snackbar = true;
+          this.$refs.form.reset()
         })
         
       }
@@ -219,7 +296,8 @@ export default {
       await connectAPI
         .getAPIWithToken("users/me")
         .then((res) => {
-          this.checkData = res;
+          this.checkData = res
+          console.log(res);
         })
         .catch((e) => {
           this.checkData = "";
@@ -249,5 +327,9 @@ export default {
   background-image: url("./assets/bg-dialog.jpg");
   background-size: 600px 450px;
   background-position: center;
+}
+.bg{
+  background: rgb(34,193,195);
+background: linear-gradient(0deg, rgba(34,193,195,0.011642156862745057) 69%, rgba(45,60,253,1) 100%);
 }
 </style>

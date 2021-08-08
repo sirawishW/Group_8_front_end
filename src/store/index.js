@@ -5,10 +5,14 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    lesson: null,
   },
   getters:{
   },
   mutations: {
+    setDataLesson(state, payload){
+      state.lesson = payload
+    }
   },
   actions: {
   },

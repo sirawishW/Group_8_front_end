@@ -1,6 +1,7 @@
 <template>
   <v-container>
-    <v-banner max-width height="250" color="grey"></v-banner>
+    <div class="d-flex justify-center">
+    <img src="../assets/banner.svg" alt="" width="1400" ></div>
         <v-row class="text-center">
       <v-col cols="12">
  <v-sheet
@@ -13,22 +14,46 @@
           <v-btn text class="ml-1 pt-2"><h4 style="color: #182768">ดูเพิ่มเติม >></h4></v-btn></v-list-item></v-list>
         </v-row>
     <v-slide-group
-      v-model="model"
       class="pa-4"
       show-arrows
+      v-model="select"
     >
       <v-slide-item
-        v-for="n in 15"
+        v-for="n in lessons"
         :key="n"
         v-slot="{ active, toggle }"
+
       >
         <v-card
-          :color="active ? 'primary' : 'grey lighten-1'"
+          :color="active ? '#FFD66B' : '#88e0bc'"
           class="ma-6"
-          height="200"
-          width="200"
+          height="250"
+          width="250"
           @click="toggle"
         >
+        <v-img
+      height="150"
+      :src="n.cover_picture ? url + n.cover_picture.url : ''"
+    ></v-img>
+        <v-card-title primary-title class="subtitle-1 d-flex justify-center pb-1">
+          {{ n.title }}
+        </v-card-title>
+        <v-card-text class="d-flex justify-start pt-0" v-if="!active">
+          <div style="width: 230px; overflow-y: hidden; height: 40px">{{ n.Description }}</div>
+        </v-card-text>
+        <v-card-actions 
+      class="d-flex justify-center mt-2">
+      <v-btn
+        color="#794C74"
+        depressed
+        @click="changePage"
+        v-if="active"
+        fixed
+        dark
+      >
+        เข้าสู่เนื้อหา
+      </v-btn>
+    </v-card-actions>
           <v-row
             class="fill-height"
             align="center"
@@ -61,22 +86,43 @@
           <v-btn text class="ml-1 pt-2"><h4 style="color: #182768">ดูเพิ่มเติม >></h4></v-btn></v-list-item></v-list>
         </v-row>
     <v-slide-group
-      v-model="model"
+      v-model="quizModel"
       class="pa-4"
       show-arrows
     >
-      <v-slide-item
-        v-for="n in 15"
+            <v-slide-item
+        v-for="n in quizs"
         :key="n"
-        v-slot="{ active, toggle }"
+        v-slot="{ active , toggle }"
       >
         <v-card
-          :color="active ? 'primary' : 'grey lighten-1'"
+          :color="active ? '#77ACF1' : '#FFAA4C'"
           class="ma-6"
-          height="200"
-          width="200"
+          :height="active ? '280' : '250'"
+          width="250"
           @click="toggle"
         >
+        <v-img
+      height="150"
+      :src="n.cover_picture ? url + n.cover_picture.url : ''"
+    ></v-img>
+        <v-card-title primary-title>
+          {{ n.title }}
+        </v-card-title>
+        <v-card-text class="d-flex justify-start pt-0">
+          <div style="width: 230px; overflow-y: hidden; height: 40px">{{ n.Description }}</div>
+        </v-card-text>
+        <v-card-actions 
+      class="d-flex justify-end">
+      <v-btn
+        color="black lighten-2"
+        text
+        @click="reserve"
+        v-if="active"
+      >
+        เข้าสู่แบบทดสอบ
+      </v-btn>
+    </v-card-actions>
           <v-row
             class="fill-height"
             align="center"
@@ -84,7 +130,7 @@
           >
             <v-scale-transition>
               <v-icon
-                v-if="active"
+                v-if="activeItem"
                 color="white"
                 size="48"
                 v-text="'mdi-close-circle-outline'"
@@ -106,17 +152,28 @@ import connectAPI from "@/services/connectAPI";
     name: 'HomePage',
 
     data: () => ({
+      url : "http://localhost:8082",
       testData: '',
-      model: ''
+      model: '',
+      lessons: null,
+      quizs: null,
+      select: null,
+      quizModel: '',
     }),
       mounted(){
-this.getData()
+this.getLessons()
   },
   methods:{
-    async getData(){
-      await connectAPI.getAPI("users").then((res) => {
-        this.testData = res
+    async getLessons(){
+      await connectAPI.getAPI("lessons").then((res) => {
+        this.lessons = res;
       })
+    },
+    changePage(){
+      //หา lessons ที่กด
+      console.log("select " + this.select);
+      this.$store.commit("setDataLesson", false);
+      this.$router.push("/lesson");
     }
   }
   }

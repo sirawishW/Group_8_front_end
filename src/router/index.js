@@ -9,6 +9,7 @@ import QuizzEntrance1 from '../views/QuizzEntrance1.vue'
 import QuizzEntrance2 from '../views/QuizzEntrance2.vue'
 import Quizz from '../views/Quizz.vue'
 import Note from '../views/Note.vue'
+import Lesson from '../views/LessonsPage.vue'
 
 Vue.use(VueRouter)
 
@@ -65,6 +66,11 @@ const routes = [
     path: '/shop',
     name: 'Shop',
     component: Shop
+  },
+  {
+    path: '/lesson',
+    name: 'Lesson',
+    component: Lesson
   }
 ]
 
