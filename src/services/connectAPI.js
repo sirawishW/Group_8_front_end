@@ -55,6 +55,17 @@ export default{
             return res.data;
         });
     },
+    async postAPI(path, body){
+        return axios.post(url + path , body
+            ,{
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("me")
+                }
+            }
+        ).then((res) => {
+            return res.data;
+        });
+    },
     logout(){
         localStorage.removeItem("me")
         this.token = '';

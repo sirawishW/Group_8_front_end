@@ -1,39 +1,41 @@
 <template>
-  <div class="numalee" v-drag-and-drop:options="options">
-    <h1>หนูมาลี : Correct : {{ getCorrect }} / 26</h1>
+  <div class="center">
+    <div class="numalee" v-drag-and-drop:options="options">
+      <h1>หนูมาลี : Correct : {{ getCorrect }} / 26</h1>
 
-    <audio autoplay>
-      <source src="@/assets/Numalee.mp3" type="audio/ogg">
-    </audio>
+      <audio autoplay>
+        <source src="@/assets/Numalee.mp3" type="audio/ogg">
+      </audio>
 
-    <div class="main">
-      <div class="notepad" v-for="(_,index) in getMusic" :key="index">
-        <div class="colume" v-for="(v,index_colume) in _.colums" :key="index_colume" :style="'margin-right:' + v.marginRight + 'px'">
-          <div class="block" v-for="(a,index_note) in v.notes" :key="index_note" :style="{border: (a.correct ? '1px solid black' : '1px dashed black'),'position': 'relative'}" 
-            :index = "index"
-            :index_colume = "index_colume"
-            :index_note = "index_note"
-            :correct = "a.note"
-          >
-            <img v-if="a.correct" :src="require(`@/assets/${a.note}.png`)" :style="{width:'75px' ,position:'absolute', top:a.top + 'px', left:a.left + 'px'}">
-            
+      <div class="main">
+        <div class="notepad" v-for="(_,index) in getMusic" :key="index">
+          <div class="colume" v-for="(v,index_colume) in _.colums" :key="index_colume" :style="'margin-right:' + v.marginRight + 'px'">
+            <div class="block" v-for="(a,index_note) in v.notes" :key="index_note" :style="{border: (a.correct ? '1px solid black' : '1px dashed black'),'position': 'relative'}" 
+              :index = "index"
+              :index_colume = "index_colume"
+              :index_note = "index_note"
+              :correct = "a.note"
+            >
+              <img v-if="a.correct" :src="require(`@/assets/${a.note}.png`)" :style="{width:'75px' ,position:'absolute', top:a.top + 'px', left:a.left + 'px'}">
+              
+            </div>
           </div>
         </div>
       </div>
+
+      <img v-for="(v) in note_lists" class="note-start" :key="v" :alt="v" :src="require(`@/assets/${v}.png`)" :value="v" style="width:5vw;">
+
+      <transition name="fade">
+          <h1>
+            <p v-if="popup" style="position:absolute; top:25%; left:45%; "  >สำเร็จ ! 🎵
+                <audio autoplay>
+                    <source src="@/assets/sss.wav" type="audio/ogg">
+                </audio>
+            </p>
+          </h1>
+      </transition>
+
     </div>
-
-    <img v-for="(v) in note_lists" class="note-start" :key="v" :alt="v" :src="require(`@/assets/${v}.png`)" :value="v" style="width:5vw;">
-
-    <transition name="fade">
-        <h1>
-          <p v-if="popup" style="position:absolute; top:35%; left:45%; "  >สำเร็จ ! 🎵
-              <audio autoplay>
-                  <source src="@/assets/sss.wav" type="audio/ogg">
-              </audio>
-          </p>
-        </h1>
-    </transition>
-
   </div>
 </template>
 
@@ -287,6 +289,12 @@ export default {
 </script>
 
 <style scoped>
+
+  .center {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
   .fade-enter-active, .fade-leave-active {
     transition: opacity .5s;
     color: rgb(249, 249, 255);
