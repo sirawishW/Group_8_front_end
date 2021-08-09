@@ -1,42 +1,22 @@
 <template>
     <div>
-        <v-simple-table>
-            <thead class="head">
-                <tr>
-                    <th class="text-left">อันดับ</th>
-                    <th class="text-left">ชื่อผู้ใช้</th>
-                    <th>คะเเนน</th>
-                    <th>วันที่</th>
-                </tr>
-            </thead>
-            <tbody class="body">
-                <tr v-for="(user, index) in users" :key="index">
-                    <td class="text-left">{{ index+1 }}</td>
-                    <td class="text-left">{{ user.username }}</td>
-                    <td>{{ user.point }}</td>
-                </tr>
-            </tbody>
-        </v-simple-table>
+        <v-data-table
+        dense
+        :headers = "headers"
+        :items = "data"
+        item-key="name"
+        class="elevation-1">
+        </v-data-table>
         <br>
         <br>
-         <h1>ตารางการใช้คะเเนน</h1>
-        <v-simple-table>
-            <thead class="head">
-                <tr>
-                    <th class="text-left">อันดับ</th>
-                    <th class="text-left">ชื่อผู้ใช้</th>
-                    <th>คะเเนน</th>
-                    <th>วันที่</th>
-                </tr>
-            </thead>
-            <tbody class="body">
-                <tr v-for="(user, index) in users" :key="index">
-                    <td class="text-left">{{ index+1 }}</td>
-                    <td class="text-left">{{ user.username }}</td>
-                    <td>{{ user.point }}</td>
-                </tr>
-            </tbody>
-        </v-simple-table>
+        <h1>ตารางใช้คะเเนน</h1>
+        <v-data-table
+        dense
+        :headers = "headers"
+        :items = "data"
+        item-key="name"
+        class="elevation-1">
+        </v-data-table>
     </div>
 </template>
 
