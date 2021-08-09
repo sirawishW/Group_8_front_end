@@ -55,13 +55,13 @@
         <v-list color="#001E6C" dark class="pt-0">
           <v-list-item v-if="!checkData">
             <v-list-item-title
-              @click="(dialog = true), (typeOfDialog = 'login')"
+              @click="(dialog = true), (typeOfDialog = 'login'), (drawer = false)"
               ><v-btn text>เข้าสู่ระบบ</v-btn></v-list-item-title
             >
           </v-list-item>
           <v-list-item v-if="!checkData">
             <v-list-item-title
-              @click="(dialog = true), (typeOfDialog = 'regis')"
+              @click="(dialog = true), (typeOfDialog = 'regis'), (drawer = false)"
               ><v-btn text>สมัครสมาชิก</v-btn></v-list-item-title
             >
           </v-list-item>
@@ -326,6 +326,7 @@ export default {
 
   methods: {
     logout() {
+      this.loginError = false;
       this.drawer = false;
       this.text = "ออกจากระบบเรียบร้อย";
       this.snackbar = true;
@@ -335,8 +336,8 @@ export default {
       this.checkIfLogin();
     },
     async register() {
+      this.loginError = false;
       this.snackbar = false;
-      var newrole = "";
       var id = "";
       if (this.$refs.form.validate()) {
         this.progessBtn = true;

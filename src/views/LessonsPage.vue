@@ -25,7 +25,7 @@
       <div class="d-flex justify-center pb-10 mt-16">
         <v-btn
           color="green"
-          v-if="!checkIfStudy && dataUser"
+          v-if="!checkIfStudy && dataUser && dataUser.role.name == 'Student'"
           @click="checkStudyLesson"
           >เช็คชื่อเข้าเรียน</v-btn
         ><v-btn color="green" v-if="checkIfStudy && dataUser" disabled
