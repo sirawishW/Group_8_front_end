@@ -5,15 +5,29 @@
     </div>
 
     <div class="center">
-      <router-link to="/numalee" style="margin-right:50px;">
-        <img src="@/assets/8.png" /><br />
+      
+      <div style="margin-right:50px;">
+        <div id="container">
+          <router-link to="/numalee" >
+            <img src="@/assets/8.png" /><br />
+          </router-link>
+        </div>
         <h2>เพลงหนูมาลี</h2>
-      </router-link>
-      <router-link to="/jingle-bell">
-        <img src="@/assets/7.png" /><br />
+      </div>
+
+
+      <div style="margin-right:50px;">
+        <div id="container">
+          <router-link to="/jingle-bell" >
+            <img src="@/assets/7.png" /><br />
+          </router-link>
+        </div>
         <h2>เพลง Jingle Bell</h2>
-      </router-link>
+      </div>
+
+
     </div>
+
   </div>
 </template>
 
@@ -32,5 +46,10 @@
 
 h2 {
   color: black;
+}
+
+#container:hover img {
+  transform: scale(1.2, 1.2);
+  z-index: 9;
 }
 </style>

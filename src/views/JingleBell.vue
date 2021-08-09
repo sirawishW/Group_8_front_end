@@ -16,12 +16,23 @@
             :correct = "a.note"
           >
             <img v-if="a.correct" :src="require(`@/assets/${a.note}.png`)" :style="{width:'75px' ,position:'absolute', top:a.top + 'px', left:a.left + 'px'}">
+            
           </div>
         </div>
       </div>
     </div>
 
     <img v-for="(v) in note_lists" class="note-start" :key="v" :alt="v" :src="require(`@/assets/${v}.png`)" :value="v" style="width:5vw;">
+
+    <transition name="fade">
+        <h1>
+          <p v-if="popup" style="position:absolute; top:35%; left:45%; "  >สำเร็จ ! 🎵
+              <audio autoplay>
+                  <source src="@/assets/sss.wav" type="audio/ogg">
+              </audio>
+          </p>
+        </h1>
+    </transition>
 
   </div>
 </template>
@@ -38,8 +49,10 @@ export default {
   },
   data(){
     return{
+      popup:false,
       correct:0,
       options:{
+ 
         dropzoneSelector: '.block',
         draggableSelector: '.note-start',
         handlerSelector: null,
@@ -51,15 +64,16 @@ export default {
           const drop = event.droptarget.attributes
           if(drop["correct"].value == item){
             this.music[drop["index"].value].colums[drop["index_colume"].value].notes[drop["index_note"].value].correct = true;
-          }else{
-            this.missed ++;
+            this.correct ++;
           }
           if(this.correct == 23){
+            this.popup = true
             console.log('complete');
+            return
           }
         },
       },
-      note_lists:[1,2,6],
+      note_lists:[1,2,6,5],
       music:[
         {
           colums:[
@@ -89,24 +103,65 @@ export default {
             {
               marginRight:55,
               notes:[
-                {note:1},
-                {note:2},
-                {note:6}
+                {
+                  note:1,
+                  left:-5,
+                  top:10,
+                  correct:false
+                
+                },
+                {
+                  note:1,
+                  left:-5,
+                  top:10,
+                  correct:false
+                },
+                {
+                  note:2,
+                  left:-5,
+                  top:10,
+                  correct:false
+                }
               ]
             },
             {
               marginRight:5,
               notes:[
-                {note:1},
-                {note:2},
-                {note:6},
-                {note:1}
+                { 
+                  note:1,
+                  left:-5,
+                  top:10,
+                  correct:false
+                },
+                {
+                  note:1,
+                  left:-5,
+                  top:-7,
+                  correct:false
+                },
+                {
+                  note:5,
+                  left:-5,
+                  top:21,
+                  correct:false
+                },
+                {
+                  note:1,
+                  left:-5,
+                  top:17,
+                  correct:false
+                }
               ]
             },
             {
               marginRight:5,
               notes:[
-                {note:1}
+                {
+                  note:6,
+                  left:-5,
+                  top:9,
+                  correct:false
+                }
               ]
             }
           ]
@@ -116,33 +171,93 @@ export default {
             {
               marginRight:60,
               notes:[
-                {note:1},
-                {note:2},
-                {note:6}
+                {
+                  note:1,
+                  left:-5,
+                  top:0,
+                  correct:false
+                },
+                {
+                  note:1,
+                  left:-5,
+                  top:0,
+                  correct:false
+                },
+                {
+                  note:2,
+                  left:-5,
+                  top:0,
+                  correct:false
+                }
               ]
             },
             {
               marginRight:60,
               notes:[
-                {note:1},
-                {note:2},
-                {note:6}
+                {
+                  note:1,
+                  left:-5,
+                  top:8,
+                  correct:false
+                },
+                {
+                  note:1,
+                  left:-5,
+                  top:8,
+                  correct:false
+                },
+                {
+                  note:2,
+                  left:-5,
+                  top:8,
+                  correct:false
+                }
               ]
             },
             {
               marginRight:5,
               notes:[
-                {note:1},
-                {note:2},
-                {note:6},
-                {note:1}
+                {
+                  note:1,
+                  left:-5,
+                  top:15,
+                  correct:false
+                },
+                {
+                  note:1,
+                  left:-5,
+                  top:15,
+                  correct:false
+                },
+                {
+                  note:1,
+                  left:-5,
+                  top:15,
+                  correct:false
+                },
+                {
+                  note:1,
+                  left:-5,
+                  top:6,
+                  correct:false
+                }
               ]
             },
             {
               marginRight:10,
               notes:[
-                {note:1},
-                {note:2}
+                {
+                  note:2,
+                  left:-5,
+                  top:15,
+                  correct:false
+                },
+                {
+                  note:2,
+                  left:-5,
+                  top:-8,
+                  correct:false
+                }
               ]
             }
           ]
@@ -154,6 +269,16 @@ export default {
 </script>
 
 <style scoped>
+  .fade-enter-active, .fade-leave-active {
+      transition: opacity .5s;
+      color: rgb(249, 249, 255);
+  }
+
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+      opacity: 0;
+      
+  }
+
   .main{
     width:1100px;
     height:300px;
