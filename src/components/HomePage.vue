@@ -252,6 +252,7 @@ this.getLessons()
     },
     changePage(){
       this.$store.lesson = this.lessons[this.select];
+      window.localStorage.setItem("lessonID", this.lessons[this.select].id);
       this.$router.push("/lesson");
     },
     moreLessons(){

@@ -1,13 +1,13 @@
 <template>
   <div>
     <h1 class="head">เเลกคะเเนน</h1>
-    <p class="display">คุณมีคะเเนนสะสม {{ user_point }} คะเเนน</p>
+    <p class="display" v-if="userData && userData == 'Student'">คุณมีคะเเนนสะสม {{ user_point }} คะเเนน</p>
     <v-row align="center" justify="space-around">
       <v-btn to="/RedeemRecord" align="center" style="margin-bottom: 30px"
-        >ประวัติการเเลกของรางวัล</v-btn
+       v-if="userData && userData == 'Student'"  >ประวัติการเเลกของรางวัล</v-btn
       >
       <v-btn style="margin-bottom: 30px" @click="addDialog = true"
-        >เพิ่มของรางวัล</v-btn
+       v-if="userData && userData == 'Admin'" >เพิ่มของรางวัล</v-btn
       >
     </v-row>
     <v-dialog v-model="addDialog" max-width="600px">
@@ -104,13 +104,13 @@
                   icon
                   @click="edit(item, index)"
                 >
-                  <v-icon>mdi-pencil</v-icon>
+                  <v-icon v-if="userData && userData == 'Admin'">mdi-pencil</v-icon>
                 </v-btn>
                 <v-btn
                   icon
                   @click="remove()"
                 >
-                  <v-icon>mdi-delete</v-icon>
+                  <v-icon v-if="userData && userData == 'Admin'">mdi-delete</v-icon>
                 </v-btn>
                 <v-spacer></v-spacer>
               </v-card-actions>
@@ -169,9 +169,9 @@ export default {
     this.getData();
     this.getPoint();
     if(window.localStorage.user){
-      this.userData = JSON.parse(window.localStorage.user)
+      var data = JSON.parse(window.localStorage.user)
+      this.userData = data.role.name
     }
-    console.log(this.userData.role.name);
   },
   methods: {
     async getData() {

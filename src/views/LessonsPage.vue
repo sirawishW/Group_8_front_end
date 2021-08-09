@@ -2,17 +2,17 @@
   <div class="d-flex justify-center mt-10">
     <v-card class="bg" width="700" height="800">
       <div class="d-flex justify-end mr-5 mt-5">
-        <v-btn text right to="/">กลับสู่หน้าหลัก</v-btn>
+        <v-btn text right @click="back()">กลับสู่หน้าหลัก</v-btn>
       </div>
 
       <div class="text-h5 pl-5 pt-10">
-        <h5 class="bg-white pl-2 rounded-xl">{{ this.$store.lesson.title }}</h5>
+        <h5 class="bg-white pl-2 rounded-xl">{{ this.lesson.title }}</h5>
       </div>
       <div class="d-flex justify-center pt-5">
         <iframe
           width="560"
           height="315"
-          :src="this.$store.lesson.link"
+          :src="this.lesson.link"
           title="YouTube video player"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -48,22 +48,47 @@ export default {
     checkIfStudy: false,
     dataUser: null,
     userLessons: [],
+    lesson: null,
   }),
   mounted() {
-    this.checkLessons();
+    this.getLesson(window.localStorage.lessonID)
   },
   computed: {
-    lesson: {
-      get: function () {
-        return this.$store.lesson;
-      },
-    },
+    // lesson: {
+    //   get: function () {
+    //     return this.$store.lesson;
+    //   },
+    // },
   },
   methods: {
-    async checkLessons() {
+    back(){
+      window.localStorage.removeItem("lessonID");
+      this.$router.push("/");
+    },
+  async  getLesson(id){
+    await connectAPI.getAPIWithToken("lessons/" + id).then((res) =>{
+      this.lesson = res;
+      this.checkLessons();
+    })
+    },
+    checkLessons() {
       if (window.localStorage.user) {
         this.dataUser = JSON.parse(window.localStorage.user);
-        await connectAPI
+        this.getDataUser();
+      } else {
+        this.checkIfStudy = true;
+      }
+    },
+    async checkStudyLesson() {
+      this.userLessons.push(this.lesson);
+      await connectAPI
+        .putAPI("users/" + this.dataUser.id, { lessons: this.userLessons })
+        .then((res) => { 
+          this.getDataUser();      
+        });
+    },
+   async getDataUser(){
+      await connectAPI
           .getAPIWithToken("users/" + this.dataUser.id)
           .then((res) => {
             this.userLessons = res.lessons;
@@ -73,16 +98,7 @@ export default {
               }
             }
           });
-      } else {
-        this.checkIfStudy = true;
-      }
-    },
-    async checkStudyLesson() {
-      this.userLessons.push(this.lesson);
-      await connectAPI
-        .putAPI("users/" + this.dataUser.id, { lessons: this.userLessons })
-        .then((res) => {});
-    },
+    }
   },
 };
 </script>
