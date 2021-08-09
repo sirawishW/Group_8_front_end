@@ -281,7 +281,7 @@
       </template>
     </v-snackbar>
     <v-main class="bg">
-      <router-view />
+      <router-view v-if="refreshKey" />
     </v-main>
   </v-app>
 </template>
@@ -292,6 +292,7 @@ export default {
   name: "App",
 
   data: () => ({
+    refreshKey: true,
     regisError: false,
     loginError: false,
     userQuizzes: "",
@@ -322,6 +323,12 @@ export default {
   }),
 
   methods: {
+    refreshPage(){
+      this.refreshKey = false
+      this.$nextTick().then(() => {
+this.refreshKey = true;
+      })
+    },
     logout() {
       this.loginError = false;
       this.drawer = false;
@@ -331,6 +338,8 @@ export default {
       window.localStorage.removeItem("user");
       this.checkData = null;
       this.checkIfLogin();
+      this.refreshPage();
+      // location.reload();
     },
     async register() {
       this.loginError = false;
@@ -380,6 +389,8 @@ export default {
           window.localStorage.setItem("jwt", user.jwt);
           window.localStorage.setItem("user", JSON.stringify(user.user));
           this.checkIfLogin();
+          this.refreshPage();
+          // location.reload();
         }).catch((e) => {
           this.progessBtn = false;
           this.loginError = true;
