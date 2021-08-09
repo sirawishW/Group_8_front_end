@@ -36,7 +36,7 @@
       height="150"
       :src="n.cover_picture ? url + n.cover_picture.url : ''"
     ></v-img>
-        <v-card-title primary-title class="subtitle-1 d-flex justify-center pb-1">
+        <v-card-title primary-title class="subtitle-1 d-flex justify-center pb-1 card-title">
           {{ n.title }}
         </v-card-title>
         <v-card-text class="d-flex justify-start pt-0" v-if="!active">
@@ -79,8 +79,9 @@
       height="150"
       :src="n.cover_picture ? url + n.cover_picture.url : ''"
     ></v-img>
-        <v-card-title primary-title class="subtitle-1 d-flex justify-center pb-1">
-          {{ n.title }}
+    
+        <v-card-title class="subtitle-1 d-flex justify-center pb-1 card-title">
+          {{ n.title }} 
         </v-card-title>
         <v-card-text class="d-flex justify-start pt-0" v-if="!active">
           <div style="width: 230px; overflow-y: hidden; max-height: 40px">{{ n.Description }}</div>
@@ -139,7 +140,7 @@
       height="150"
       :src="n.cover_picture ? url + n.cover_picture.url : ''"
     ></v-img>
-        <v-card-title primary-title>
+        <v-card-title primary-title class="subtitle-1 d-flex justify-center pb-1 card-title">
           {{ n.title }}
         </v-card-title>
         <v-card-text class="d-flex justify-start pt-0">
@@ -194,7 +195,7 @@
       height="150"
       :src="n.cover_picture ? url + n.cover_picture.url : ''"
     ></v-img>
-        <v-card-title primary-title class="subtitle-1 d-flex justify-center pb-1">
+        <v-card-title primary-title class="subtitle-1 d-flex justify-center pb-1 card-title">
           {{ n.title }}
         </v-card-title>
         <v-card-text class="d-flex justify-start pt-0" v-if="!active">
@@ -267,5 +268,9 @@ this.getLessons()
   overflow-y: auto !important; 
   max-height:700px; 
   overflow-x: hidden !important;
+}
+.card-title{
+  max-height: 55px !important; 
+  overflow-y: auto !important;
 }
 </style>

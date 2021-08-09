@@ -58,5 +58,11 @@ export default{
     logout(){
         localStorage.removeItem("me")
         this.token = '';
-    }
+    },
+    async deleteAPI(path, id){
+     return axios.delete(url + path + id ,{ headers: {
+        Authorization: "Bearer " + localStorage.getItem("me")
+    } 
+      }
+     )}
 }

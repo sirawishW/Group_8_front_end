@@ -1,6 +1,14 @@
 <template>
   <v-app>
-    <v-app-bar app color="#001E6C" dark flat class="nav-bar" height="50px" key="appBar">
+    <v-app-bar
+      app
+      color="#001E6C"
+      dark
+      flat
+      class="nav-bar"
+      height="50px"
+      key="appBar"
+    >
       <div class="d-flex align-center">
         <v-icon large>mdi-music-accidental-sharp</v-icon>
         <h3>Music Hub</h3>
@@ -30,8 +38,8 @@
         ><span>แลกคะแนน</span></v-tooltip
       >
       <v-tooltip bottom v-if="checkData && checkData.role.name == 'Admin'">
-        <template v-slot:activator="{ on, attrs }" >
-          <v-btn to="/leaderboard" icon v-bind="attrs" v-on="on" 
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn to="/leaderboard" icon v-bind="attrs" v-on="on"
             ><v-icon>mdi-trophy-variant</v-icon>
           </v-btn> </template
         ><span>ตารางคะแนน</span></v-tooltip
@@ -58,7 +66,11 @@
             >
           </v-list-item>
           <v-list-item v-if="checkData && checkData.role.name == 'Student'">
-            <v-list-item-title><v-btn text @click="callProfile()">โปรไฟล์</v-btn></v-list-item-title>
+            <v-list-item-title
+              ><v-btn text @click="callProfile()"
+                >โปรไฟล์</v-btn
+              ></v-list-item-title
+            >
           </v-list-item>
           <v-list-item v-if="checkData">
             <v-list-item-title
@@ -77,8 +89,8 @@
           <h3>สมัครสมาชิก</h3>
         </v-card-title>
         <div style="width: 350px; padding-left: 90px">
-          <v-form class="pt-10" ref="form" v-model="valid" lazy-validation
-            ><v-text-field
+          <v-form class="pt-10" ref="form" v-model="valid" lazy-validation>
+            <v-text-field
               v-model="email"
               :rules="emailRules"
               label="อีเมล"
@@ -87,6 +99,16 @@
               dense
               background-color="white"
             ></v-text-field>
+                        <v-tooltip left v-if="typeOfDialog == 'regis'">
+              <template v-slot:activator="{ on, attrs }"  >
+                <div class="pb-3" >
+               รหัสผ่าน <v-icon v-bind="attrs" v-on="on">mdi-progress-question</v-icon></div>
+              </template>
+              รหัสผ่านจะต้องมี <br />
+              – ความยาวมากกว่า 6 ตัวอักษร <br />
+              – ตัวอักษร (a-z, A-Z) อย่างน้อย 1 ตัว <br />
+              – ตัวเลข (0-9) <br /></v-tooltip
+            >
             <v-text-field
               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               :type="showPassword ? 'text' : 'password'"
@@ -112,6 +134,8 @@
               dense
               background-color="white"
             ></v-text-field>
+            <v-text class="d-flex justify-center" style="color:red" v-if="loginError">อีเมลหรือรหัสผ่านไม่ถูกต้อง</v-text>
+            <v-text class="d-flex justify-center" style="color:red" v-if="regisError">อีเมลนี้ถูกใช้งานแล้ว</v-text>
             <div class="ml-2">
               <v-btn
                 color="#690D90"
@@ -147,77 +171,102 @@
         </div></v-card
       >
     </v-dialog>
-     <v-navigation-drawer
-      v-model="drawer"
-      absolute
-      right
-    ><v-list class="pt-7">
-      <v-icon @click="drawer = false" class="pt-8" style="padding-left: 83%" right>mdi-close</v-icon>
-      <v-list-item class="px-2 d-flex justify-center">
-            <v-list-item-avatar color="green" class="mt-1 ml-3" size="50">
-             <h1 v-if="this.checkData">{{ this.userData ? this.userData.username.charAt().toUpperCase() : '' }}</h1> 
-  </v-list-item-avatar>
-          </v-list-item>
-              
-
-          <v-list-item>
-            <v-list-item-content >
-              <v-list-item-title class="text-h6 d-flex justify-center">
-                {{ this.userData ? this.userData.username : '' }}
-              </v-list-item-title>
-              <v-list-item-subtitle class="d-flex justify-center"> {{ this.userData ? this.userData.email : '' }}</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list>
-
-        <v-divider></v-divider>
-
-        <v-list
-          nav
-          dense
+    <v-navigation-drawer v-model="drawer" absolute right
+      ><v-list class="pt-7">
+        <v-icon
+          @click="drawer = false"
+          class="pt-8"
+          style="padding-left: 83%"
+          right
+          >mdi-close</v-icon
         >
-          <v-list-item>
-            <v-list-item-title class="d-flex justify-center">คะแนน : {{this.userData ? this.userData.point : 0}}</v-list-item-title>
-          </v-list-item>
-          <!-- <v-list-item >
+        <v-list-item class="px-2 d-flex justify-center">
+          <v-list-item-avatar color="green" class="mt-1 ml-3" size="50">
+            <h1 v-if="this.checkData">
+              {{
+                this.userData
+                  ? this.userData.username.charAt().toUpperCase()
+                  : ""
+              }}
+            </h1>
+          </v-list-item-avatar>
+        </v-list-item>
+
+        <v-list-item>
+          <v-list-item-content>
+            <v-list-item-title class="text-h6 d-flex justify-center">
+              {{ this.userData ? this.userData.username : "" }}
+            </v-list-item-title>
+            <v-list-item-subtitle class="d-flex justify-center">
+              {{
+                this.userData ? this.userData.email : ""
+              }}</v-list-item-subtitle
+            >
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+
+      <v-divider></v-divider>
+
+      <v-list nav dense>
+        <v-list-item>
+          <v-list-item-title class="d-flex justify-center"
+            >คะแนน :
+            {{ this.userData ? this.userData.point : 0 }}</v-list-item-title
+          >
+        </v-list-item>
+        <!-- <v-list-item >
             <v-list-item-title class="d-flex justify-center">อันดับคะแนน : </v-list-item-title>
           </v-list-item> -->
-          <v-list-item>
-            <v-list-item-title class="d-flex justify-center">บทเรียนที่เรียนแล้ว</v-list-item-title>
-          </v-list-item>
-          <v-list color="#EDF6E5" max-height="150" style="overflow-y: auto" class="ml-3">
-      <v-list-item-group class="pl-1" >
-        <v-list-item
-          v-for=" item in userLessons"
-          :key="item"
-        >
-          <v-list-item-content>
-            <v-list-item-title ><v-icon x-small class="pr-2">mdi-checkbox-blank-circle</v-icon>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
+        <v-list-item>
+          <v-list-item-title class="d-flex justify-center"
+            >บทเรียนที่เรียนแล้ว</v-list-item-title
+          >
         </v-list-item>
-      </v-list-item-group>
-    </v-list>
-    <v-list-item>
-            <v-list-item-title class="d-flex justify-center">แบบทดสอบที่ทำแล้ว</v-list-item-title>
-          </v-list-item>
-          <v-list color="#EDF6E5" max-height="150" style="overflow-y: auto" class="ml-3">
-      <v-list-item-group class="pl-1" >
-        <v-list-item
-          v-for=" itemQuiz in userQuizzes"
-          :key="itemQuiz"
+        <v-list
+          color="#EDF6E5"
+          max-height="150"
+          style="overflow-y: auto"
+          class="ml-3"
         >
-          <v-list-item-content>
-            <v-list-item-title ><v-icon x-small class="pr-2">mdi-checkbox-blank-circle</v-icon>{{ itemQuiz.title }}</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list-item-group>
-    </v-list>
+          <v-list-item-group class="pl-1">
+            <v-list-item v-for="item in userLessons" :key="item">
+              <v-list-item-content>
+                <v-list-item-title
+                  ><v-icon x-small class="pr-2"
+                    >mdi-checkbox-blank-circle</v-icon
+                  >{{ item.title }}</v-list-item-title
+                >
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
         </v-list>
-     </v-navigation-drawer>
-     <v-snackbar
-      v-model="snackbar"
-      top
-    >
+        <v-list-item>
+          <v-list-item-title class="d-flex justify-center"
+            >แบบทดสอบที่ทำแล้ว</v-list-item-title
+          >
+        </v-list-item>
+        <v-list
+          color="#EDF6E5"
+          max-height="150"
+          style="overflow-y: auto"
+          class="ml-3"
+        >
+          <v-list-item-group class="pl-1">
+            <v-list-item v-for="itemQuiz in userQuizzes" :key="itemQuiz">
+              <v-list-item-content>
+                <v-list-item-title
+                  ><v-icon x-small class="pr-2"
+                    >mdi-checkbox-blank-circle</v-icon
+                  >{{ itemQuiz.title }}</v-list-item-title
+                >
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-list>
+    </v-navigation-drawer>
+    <v-snackbar v-model="snackbar" top>
       {{ text }}
 
       <template v-slot:action="{ attrs }">
@@ -225,16 +274,11 @@
           color="pink"
           v-if="typeOfDialog == 'regis'"
           v-bind="attrs"
-          @click="typeOfDialog = 'login', dialog = true;"
+          @click="(typeOfDialog = 'login'), (dialog = true)"
         >
           เข้าสู่ระบบ
         </v-btn>
-        <v-btn
-          color="pink"
-          text
-          v-bind="attrs"
-          @click="snackbar = false"
-        >
+        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </template>
@@ -251,10 +295,12 @@ export default {
   name: "App",
 
   data: () => ({
-    userQuizzes: '',
-    userLessons:'',
-    userData: '',
-    valid: '',
+    regisError: false,
+    loginError: false,
+    userQuizzes: "",
+    userLessons: "",
+    userData: "",
+    valid: "",
     drawer: false,
     showComfirmPassword: false,
     showPassword: false,
@@ -266,26 +312,27 @@ export default {
     checkPassword: "",
     email: "",
     progessBtn: false,
-    text: '',
+    text: "",
     snackbar: false,
     emailRules: [
       (v) => !!v || "กรุณาใส่อีเมล",
       (v) => /.+@.+\..+/.test(v) || "กรุณาใส่อีเมลให้ถูกต้อง",
     ],
-    passwordRules: [(v) => !!v || "กรุณาใส่รหัสผ่าน"],
+    passwordRules: [(v) => !!v || "กรุณาใส่รหัสผ่าน",
+    (v) => /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$/.test(v) || "รหัสผ่านไม่ตรงเงื่อนไข"],
     checkPasswordRules: [(v) => !!v || "กรุณายืนยันรหัสผ่าน"],
     //
   }),
 
   methods: {
-    logout(){
+    logout() {
       this.drawer = false;
-      this.text = "ออกจากระบบเรียบร้อย"
-       this.snackbar = true;
-        window.localStorage.removeItem('jwt')
-        window.localStorage.removeItem('user')
-        this.checkData = null
-        this.checkIfLogin();
+      this.text = "ออกจากระบบเรียบร้อย";
+      this.snackbar = true;
+      window.localStorage.removeItem("jwt");
+      window.localStorage.removeItem("user");
+      this.checkData = null;
+      this.checkIfLogin();
     },
     async register() {
       this.snackbar = false;
@@ -293,19 +340,31 @@ export default {
       var id = "";
       if (this.$refs.form.validate()) {
         this.progessBtn = true;
-        var username = this.email.split('@')
-        await connectAPI.registerUser(username[0], this.email, this.password).then((res) => {
-          id = res.user.id;
-        })
-        await connectAPI.getAPI("users-permissions/roles/4").then((res) => {newrole = res.role})
-        await connectAPI.putAPI("users/" + id, {role : newrole}).then((res) => { this.dialog = false;
-          this.progessBtn = false;
-          this.email = "";
-          this.password = "";
-          this.checkPassword = "";
-          this.text = "ลงทะเบียนเรียบร้อย";
-          this.snackbar = true;
-          this.$refs.form.reset() })
+        var username = this.email.split("@");
+        await connectAPI
+          .registerUser(username[0], this.email, this.password)
+          .then((res) => {
+            id = res.user.id;
+          }).catch((e) => {this.regisError = true; this.progessBtn = false;})
+        await connectAPI.getAPI("users-permissions/roles").then((res) => {
+          for(var i = 0 ; i< res.roles.length ; i++){
+            if(res.roles[i].name == 'Student'){
+              this.newrole = res.roles[i]
+            }
+          }
+        });
+         await connectAPI
+          .putAPI("users/" + id, { role: this.newrole })
+          .then((res) => {
+            this.dialog = false;
+            this.progessBtn = false;
+            this.email = "";
+            this.password = "";
+            this.checkPassword = "";
+            this.text = "ลงทะเบียนเรียบร้อย";
+            this.snackbar = true;
+            this.$refs.form.reset();
+          });
       }
     },
     async login() {
@@ -316,43 +375,48 @@ export default {
           this.progessBtn = false;
           this.email = "";
           this.password = "";
-          this.text = "เข้าสู่ระบบเรียบร้อย"
+          this.text = "เข้าสู่ระบบเรียบร้อย";
           this.snackbar = true;
-          this.$refs.form.reset()
-          const user = res
-          window.localStorage.setItem('jwt', user.jwt)
-          window.localStorage.setItem('user', JSON.stringify(user.user))
+          this.$refs.form.reset();
+          const user = res;
+          window.localStorage.setItem("jwt", user.jwt);
+          window.localStorage.setItem("user", JSON.stringify(user.user));
           this.checkIfLogin();
-        })
-        
+        }).catch((e) => {
+          this.progessBtn = false;
+          this.loginError = true;
+        });
       }
     },
-  checkIfLogin() {
-     if(window.localStorage.user){
-        this.checkData = JSON.parse(window.localStorage.user)
-      }
-      else{
-        this.checkData = null
+    checkIfLogin() {
+      if (window.localStorage.user) {
+        this.checkData = JSON.parse(window.localStorage.user);
+      } else {
+        this.checkData = null;
       }
     },
-  async callProfile(){
+    async callProfile() {
+      await connectAPI.getAPIWithToken("users/me").then((res) => {
+        this.userData = res;
+        this.drawer = true;
+      });
       await connectAPI
-        .getAPIWithToken("users/me")
+        .getAPIWithToken("users/" + this.checkData.id)
         .then((res) => {
-          this.userData = res;
-          this.drawer = true;
+          this.userLessons = res.lessons;
+          this.userQuizzes = res.quizzes;
         })
-      await connectAPI.getAPIWithToken("users/"+ this.checkData.id).then((res) => {
-        this.userLessons = res.lessons;
-        this.userQuizzes = res.quizzes
-      }).catch((e) => {console.log(e);
+        .catch((e) => {
+          console.log(e);
         });
     },
     cancelForm() {
       this.$refs.form.reset();
       this.$refs.form.resetValidation();
       this.dialog = false;
-      this.progessBtn=false
+      this.progessBtn = false;
+      this.loginError = false;
+      this.loginError = false;
     },
   },
   mounted() {
@@ -374,8 +438,12 @@ export default {
   background-size: 600px 450px;
   background-position: center;
 }
-.bg{
-  background: rgb(34,193,195);
-background: linear-gradient(0deg, rgba(34,193,195,0.011642156862745057) 69%, rgba(45,60,253,1) 100%);
+.bg {
+  background: rgb(34, 193, 195);
+  background: linear-gradient(
+    0deg,
+    rgba(34, 193, 195, 0.011642156862745057) 69%,
+    rgba(45, 60, 253, 1) 100%
+  );
 }
 </style>
