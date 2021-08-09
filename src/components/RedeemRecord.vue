@@ -3,10 +3,9 @@
         <v-simple-table>
             <thead class="head">
                 <tr>
-                    <th class="text-left">อันดับ</th>
-                    <th class="text-left">ชื่อผู้ใช้</th>
-                    <th>คะเเนน</th>
                     <th>วันที่</th>
+                    <th>ของที่เเลก</th>
+                    <th>เเต้มที่ใช้</th>
                 </tr>
             </thead>
             <tbody class="body">

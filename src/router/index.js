@@ -10,6 +10,7 @@ import QuizzEntrance2 from '../views/QuizzEntrance2.vue'
 import Quizz from '../views/Quizz.vue'
 import Note from '../views/Note.vue'
 import Lesson from '../views/LessonsPage.vue'
+import RedeemRecord from '../views/RedeemRecordUI.vue'
 
 Vue.use(VueRouter)
 
@@ -71,6 +72,11 @@ const routes = [
     path: '/lesson',
     name: 'Lesson',
     component: Lesson
+  },
+  {
+    path: '/RedeemRecord',
+    name: 'RedeemRecord',
+    component: RedeemRecord
   }
 ]
 
