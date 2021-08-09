@@ -215,9 +215,6 @@
             {{ this.userData ? this.userData.point : 0 }}</v-list-item-title
           >
         </v-list-item>
-        <!-- <v-list-item >
-            <v-list-item-title class="d-flex justify-center">อันดับคะแนน : </v-list-item-title>
-          </v-list-item> -->
         <v-list-item>
           <v-list-item-title class="d-flex justify-center"
             >บทเรียนที่เรียนแล้ว</v-list-item-title
