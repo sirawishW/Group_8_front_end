@@ -156,9 +156,7 @@ this.getLessons()
       })
     },
     changePage(){
-      //หา lessons ที่กด
-      console.log("select " + this.select);
-      this.$store.commit("setDataLesson", false);
+      this.$store.lesson = this.lessons[this.select];
       this.$router.push("/lesson");
     }
   },

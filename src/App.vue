@@ -58,7 +58,7 @@
             >
           </v-list-item>
           <v-list-item v-if="checkData">
-            <v-list-item-title><v-btn text @click="drawer=true, checkIfLogin()">โปรไฟล์</v-btn></v-list-item-title>
+            <v-list-item-title><v-btn text @click="callProfile()">โปรไฟล์</v-btn></v-list-item-title>
           </v-list-item>
           <v-list-item v-if="checkData">
             <v-list-item-title
@@ -155,7 +155,7 @@
       <v-icon @click="drawer = false" class="pt-8" style="padding-left: 83%" right>mdi-close</v-icon>
       <v-list-item class="px-2 d-flex justify-center">
             <v-list-item-avatar color="green" class="mt-1 ml-2" size="50">
-             <h1 v-if="this.checkData">{{ this.checkData.username.charAt().toUpperCase() }}</h1> 
+             <h1 v-if="this.checkData">{{ this.userData ? this.userData.username.charAt().toUpperCase() : '' }}</h1> 
   </v-list-item-avatar>
           </v-list-item>
               
@@ -163,9 +163,9 @@
           <v-list-item>
             <v-list-item-content >
               <v-list-item-title class="text-h6 d-flex justify-center">
-                {{ this.checkData.username }}
+                {{ this.userData ? this.userData.username : '' }}
               </v-list-item-title>
-              <v-list-item-subtitle class="d-flex justify-center"> {{ this.checkData.email }}</v-list-item-subtitle>
+              <v-list-item-subtitle class="d-flex justify-center"> {{ this.userData ? this.userData.email : '' }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -177,7 +177,7 @@
           dense
         >
           <v-list-item>
-            <v-list-item-title class="d-flex justify-center">คะแนน : {{this.checkData.point ? this.checkData.point : 0}}</v-list-item-title>
+            <v-list-item-title class="d-flex justify-center">คะแนน : {{this.userData ? this.userData.point : 0}}</v-list-item-title>
           </v-list-item>
           <v-list-item >
             <v-list-item-title class="d-flex justify-center">อันดับคะแนน : </v-list-item-title>
@@ -224,6 +224,7 @@ export default {
   name: "App",
 
   data: () => ({
+    userData: '',
     valid: '',
     drawer: false,
     showComfirmPassword: false,
@@ -249,13 +250,16 @@ export default {
 
   methods: {
     logout(){
-      location.reload()
-      this.checkIfLogin();
       this.drawer = false;
       this.text = "ออกจากระบบเรียบร้อย"
        this.snackbar = true;
+        window.localStorage.removeItem('jwt')
+        window.localStorage.removeItem('user')
+        this.checkData = null
+        this.checkIfLogin();
     },
     async register() {
+      this.snackbar = false;
       var newrole = "";
       var id = "";
       if (this.$refs.form.validate()) {
@@ -283,23 +287,33 @@ export default {
           this.progessBtn = false;
           this.email = "";
           this.password = "";
-          this.checkIfLogin();
           this.text = "เข้าสู่ระบบเรียบร้อย"
           this.snackbar = true;
           this.$refs.form.reset()
+          const user = res
+          window.localStorage.setItem('jwt', user.jwt)
+          window.localStorage.setItem('user', JSON.stringify(user.user))
+          this.checkIfLogin();
         })
         
       }
     },
-    async checkIfLogin() {
+  checkIfLogin() {
+     if(window.localStorage.user){
+        this.checkData = JSON.parse(window.localStorage.user)
+      }
+      else{
+        this.checkData = null
+      }
+    },
+  async callProfile(){
       await connectAPI
         .getAPIWithToken("users/me")
         .then((res) => {
-          this.checkData = res
-          console.log(res);
+          this.userData = res;
+          this.drawer = true;
         })
-        .catch((e) => {
-          this.checkData = "";
+        .catch((e) => {console.log(e);
         });
     },
     cancelForm() {
