@@ -4,6 +4,7 @@
        <p class="display">คุณมีคะเเนนสะสม {{ user_point }} คะเเนน</p>
        <v-row align="center" justify="space-around">
             <v-btn to="/RedeemRecord" align="center" style="margin-bottom:30px;">ประวัติการเเลกของรางวัล</v-btn>
+            <v-btn v-if="checkData && checkData.role.name == 'Admin'" style="margin-bottom:30px;">เพิ่มของรางวัล</v-btn>
        </v-row>
        <v-item-group>
            <v-container>
@@ -19,12 +20,13 @@
                         <v-card-subtitle>{{ item.point_cost }} points</v-card-subtitle>
                         <v-card-text>คงเหลือ {{ item.number }}</v-card-text>
                         <v-card-actions>
-                            <v-btn v-if="item.number !== 0" @click.stop="dialog = true; item_name = item.item_name; point_cost = item.point_cost" color="blue" text >เเลก</v-btn>
+                            <v-btn v-if="item.number !== 0" @click.stop="dialog = true; item_name = item.item_name; 
+                            point_cost = item.point_cost; item_id = item.id; item_remain =  item.number" color="blue" text >เเลก</v-btn>
                             <v-btn v-else disabled>สินค้าหมด</v-btn>
-                            <v-btn icon @click="edit()">
+                            <v-btn icon @click="edit(item, index)" v-if="checkData && checkData.role.name == 'Admin'">
                                 <v-icon>mdi-pencil</v-icon>
                             </v-btn>
-                            <v-btn icon @click="remove()">
+                            <v-btn icon @click="remove()" v-if="checkData && checkData.role.name == 'Admin'">
                                 <v-icon>mdi-delete</v-icon>
                             </v-btn>
                             <v-spacer></v-spacer>
@@ -61,6 +63,7 @@ export default{
         items: '',
         model: '',
         dialog: false,
+        item_id: '',
         item_name: '',
         point_cost: 0,
         user_point: 0,
@@ -81,11 +84,12 @@ export default{
         async getData(){
             await connectAPI.getAPI("shop-items").then((res) =>{
                 this.items = res
+
             })            
         },
         async getPoint(){
             await connectAPI.getAPIWithToken("users/me").then((res) =>{
-                this.current_id = res.id 
+                this.current_id = res.id
                 this.user_point = res.point
             })
         },
@@ -96,15 +100,15 @@ export default{
             }
             else{
                 this.point_after_redeem = this.user_point - this.point_cost
-                this.item_remain = this.number -1
+                this.item_remain = this.item_remain - 1
                 await connectAPI.putAPI("users/"+ this.current_id, { point:this.point_after_redeem })
-                await connectAPI.putAPI("shop-itmes", { number:this.item_remain })
+                await connectAPI.putAPI("shop-items/"+ this.item_id, { number:this.item_remain })
                 alert("เเลกเปลี่ยนสำเร็จ")
                 this.dialog = false
                 location.reload()
             }
         },
-        edit(){
+        edit(item, index){
 
         },
         remove(){

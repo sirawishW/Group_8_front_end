@@ -29,7 +29,7 @@
           </v-btn> </template
         ><span>แลกคะแนน</span></v-tooltip
       >
-      <v-tooltip bottom>
+      <v-tooltip bottom v-if="checkData && checkData.role.name == 'Admin'">
         <template v-slot:activator="{ on, attrs }">
           <v-btn to="/leaderboard" icon v-bind="attrs" v-on="on"
             ><v-icon>mdi-trophy-variant</v-icon>
@@ -57,7 +57,7 @@
               ><v-btn text>สมัครสมาชิก</v-btn></v-list-item-title
             >
           </v-list-item>
-          <v-list-item v-if="checkData">
+          <v-list-item v-if="checkData && checkData.role.name == 'Student'">
             <v-list-item-title><v-btn text @click="callProfile()">โปรไฟล์</v-btn></v-list-item-title>
           </v-list-item>
           <v-list-item v-if="checkData">
