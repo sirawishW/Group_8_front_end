@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import connectAPI from "@/services/connectAPI";
 export default {
   props:['question_array'],
   data(){
@@ -62,9 +63,14 @@ export default {
           popup:false,
           popup2:false,
           count_question:0,
-          correct_question:0
+          correct_question:0,
+        //   question:''
       }
   },
+  mounted(){
+        this.getData()
+        this.getPoint()
+    },
   methods:{
       checkAnswer(answer){
           if(answer == this.question_array[this.current_question].answer){
@@ -88,7 +94,17 @@ export default {
           }else{
               console.log('Wrong')
           }
-      }
+      },
+        async getData(){
+            await connectAPI.getAPI("/quizzes").then((res) =>{
+                this.question = res
+            })            
+        },
+        async getPoint(){
+            await connectAPI.getAPIWithToken("users/me").then((res) =>{
+                this.user_point = res.point
+            })
+        },
   }
 }
 </script>

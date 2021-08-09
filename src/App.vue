@@ -57,7 +57,7 @@
               ><v-btn text>สมัครสมาชิก</v-btn></v-list-item-title
             >
           </v-list-item>
-          <v-list-item v-if="checkData">
+          <v-list-item v-if="checkData && checkData.role.name == 'Student'">
             <v-list-item-title><v-btn text @click="callProfile()">โปรไฟล์</v-btn></v-list-item-title>
           </v-list-item>
           <v-list-item v-if="checkData">
