@@ -75,11 +75,5 @@ export default{
         Authorization: "Bearer " + localStorage.getItem("me")
     } 
       }
-    )},
-    async deleteAPI(path, id){
-        return axios.delete(url + path + id ,{ headers: {
-           Authorization: "Bearer " + localStorage.getItem("me")
-       } 
-         }
     )}
 }
