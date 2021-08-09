@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar app color="#001E6C" dark flat class="nav-bar" height="50px">
+    <v-app-bar app color="#001E6C" dark flat class="nav-bar" height="50px" key="appBar">
       <div class="d-flex align-center">
         <v-icon large>mdi-music-accidental-sharp</v-icon>
         <h3>Music Hub</h3>
@@ -29,9 +29,9 @@
           </v-btn> </template
         ><span>แลกคะแนน</span></v-tooltip
       >
-      <v-tooltip bottom>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn to="/leaderboard" icon v-bind="attrs" v-on="on"
+      <v-tooltip bottom v-if="checkData && checkData.role.name == 'Admin'">
+        <template v-slot:activator="{ on, attrs }" >
+          <v-btn to="/leaderboard" icon v-bind="attrs" v-on="on" 
             ><v-icon>mdi-trophy-variant</v-icon>
           </v-btn> </template
         ><span>ตารางคะแนน</span></v-tooltip
@@ -154,7 +154,7 @@
     ><v-list class="pt-7">
       <v-icon @click="drawer = false" class="pt-8" style="padding-left: 83%" right>mdi-close</v-icon>
       <v-list-item class="px-2 d-flex justify-center">
-            <v-list-item-avatar color="green" class="mt-1 ml-2" size="50">
+            <v-list-item-avatar color="green" class="mt-1 ml-3" size="50">
              <h1 v-if="this.checkData">{{ this.userData ? this.userData.username.charAt().toUpperCase() : '' }}</h1> 
   </v-list-item-avatar>
           </v-list-item>
@@ -179,12 +179,39 @@
           <v-list-item>
             <v-list-item-title class="d-flex justify-center">คะแนน : {{this.userData ? this.userData.point : 0}}</v-list-item-title>
           </v-list-item>
-          <v-list-item >
+          <!-- <v-list-item >
             <v-list-item-title class="d-flex justify-center">อันดับคะแนน : </v-list-item-title>
+          </v-list-item> -->
+          <v-list-item>
+            <v-list-item-title class="d-flex justify-center">บทเรียนที่เรียนแล้ว</v-list-item-title>
           </v-list-item>
-          <v-list-item >
-            <v-list-item-title class="d-flex justify-center">เนื้อหาที่ผ่านการเรียนแล้ว</v-list-item-title>
+          <v-list color="#EDF6E5" max-height="150" style="overflow-y: auto" class="ml-3">
+      <v-list-item-group class="pl-1" >
+        <v-list-item
+          v-for=" item in userLessons"
+          :key="item"
+        >
+          <v-list-item-content>
+            <v-list-item-title ><v-icon x-small class="pr-2">mdi-checkbox-blank-circle</v-icon>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-item-group>
+    </v-list>
+    <v-list-item>
+            <v-list-item-title class="d-flex justify-center">แบบทดสอบที่ทำแล้ว</v-list-item-title>
           </v-list-item>
+          <v-list color="#EDF6E5" max-height="150" style="overflow-y: auto" class="ml-3">
+      <v-list-item-group class="pl-1" >
+        <v-list-item
+          v-for=" itemQuiz in userQuizzes"
+          :key="itemQuiz"
+        >
+          <v-list-item-content>
+            <v-list-item-title ><v-icon x-small class="pr-2">mdi-checkbox-blank-circle</v-icon>{{ itemQuiz.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-item-group>
+    </v-list>
         </v-list>
      </v-navigation-drawer>
      <v-snackbar
@@ -224,6 +251,8 @@ export default {
   name: "App",
 
   data: () => ({
+    userQuizzes: '',
+    userLessons:'',
     userData: '',
     valid: '',
     drawer: false,
@@ -313,13 +342,17 @@ export default {
           this.userData = res;
           this.drawer = true;
         })
-        .catch((e) => {console.log(e);
+      await connectAPI.getAPIWithToken("users/"+ this.checkData.id).then((res) => {
+        this.userLessons = res.lessons;
+        this.userQuizzes = res.quizzes
+      }).catch((e) => {console.log(e);
         });
     },
     cancelForm() {
       this.$refs.form.reset();
       this.$refs.form.resetValidation();
       this.dialog = false;
+      this.progessBtn=false
     },
   },
   mounted() {
