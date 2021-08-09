@@ -355,7 +355,7 @@ export default {
           }
         });
          await connectAPI
-          .putAPI("users/" + id, { role: this.newrole })
+          .putAPI("users/" + id, { role: this.newrole, point: 0 })
           .then((res) => {
             this.dialog = false;
             this.progessBtn = false;
