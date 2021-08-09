@@ -70,14 +70,14 @@
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
                   label="ชื่อของรางวัล"
-                  required :rules="[() => name.length > 0 || 'Required field']"
+                  required :rules="[() => name.lenght > 0 || 'Required field']"
                   v-model="name"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
                   label="เเต้มที่ใช้เเลก"
-                  required :rules="[() => cost.length > 0 || 'Required field']"
+                  required :rules="[() => cost.lenght > 0 || 'Required field']"
                   v-model="cost"
                 ></v-text-field>
               </v-col>
@@ -90,7 +90,7 @@
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
                   label="จำนวนของรางวัล"
-                  required :rules="[() => cost.length >= 0 || 'Required field']"
+                  required :rules="[() => cost.lenght >= 0 || 'Required field']"
                   v-model="stock"
                 ></v-text-field>
               </v-col>
@@ -102,7 +102,7 @@
           <v-btn color="blue darken-1" text @click="editDialog = false">
             ปิด
           </v-btn>
-          <v-btn color="blue darken-1" text @click="editDialog = false; edit()">
+          <v-btn color="blue darken-1" text @click="editDialog = false; remove()">
             บันทึก
           </v-btn>
         </v-card-actions>
@@ -128,7 +128,7 @@
               <v-card-text>คงเหลือ {{ item.number }}</v-card-text>
               <v-card-actions>
                 <v-btn
-                  v-if="item.number !== 0 && userData =='Student'"
+                  v-if="item.number !== 0"
                   @click.stop="
                     dialog = true;
                     item_name = item.item_name;
@@ -143,8 +143,7 @@
                 <v-btn v-else disabled>สินค้าหมด</v-btn>
                 <v-btn
                   icon
-                  @click="editDialog = true;
-                  item_id = item.id"
+                  @click="editDialog = true"
                 >
                   <v-icon v-if="userData && userData == 'Admin'">mdi-pencil</v-icon>
                 </v-btn>
@@ -217,6 +216,7 @@ export default {
     name: "",
     description: "",
     cost: 0,
+    img: null,
     stock: 0,
   }),
   mounted() {
@@ -258,34 +258,21 @@ export default {
       }
     },
     async edit() {
-      await connectAPI.putAPI("shop-items/" + this.item_id,{ 
-          item_name: this.name,
-          point_cost: this.cost,
-          item_description: this.description,
-          number: this.stock,
-      })
-      alert("เเก้ไขสำเร็จ")
-      this.getData()
-      location.reload()
+      // await connectAPI.putAPI("shop-items" + this.item_id, {});
     },
     async remove(){
+      // console.log(this.item_id)
       await connectAPI.deleteAPI("shop-items/", this.item_id)
       alert("ลบของรางวัลสำเร็จ")
       location.reload()
     },
     async add(){
         await connectAPI.postAPI("shop-items", { 
-          item_name: this.name,
-          point_cost: this.cost,
-          item_description: this.description,
-          number: this.stock,
-          src: 'discountCoupon.png'
-        })
-        await connectAPI.postAPI("histories",{
-          point: this.point_cost,
-          type: 'loss',
-          // user_permissions_user:
-          details: this.item_name,
+            item_name: this.name,
+            point_cost: this.cost,
+            item_description: this.description,
+            number: this.stock,
+            image: this.img 
         })
         alert("เพิ่มของรางวัลสำเร็จ")
         this.getData()

@@ -1,23 +1,10 @@
 <template>
     <div>
-        <v-simple-table>
-            <thead class="head">
-                <tr>
-                    <th>วันที่</th>
-                    <th>ของที่เเลก</th>
-                    <th>เเต้มที่ใช้</th>
-                </tr>
-            </thead>
-            <tbody class="body">
-                <tr v-for="(user, index) in users" :key="index">
-                    <td class="text-left">{{ index+1 }}</td>
-                    <td class="text-left">{{ user.username }}</td>
-                    <td>{{ user.point }}</td>
-                </tr>
-            </tbody>
-        </v-simple-table>
-        <br>
-        <br>
+        <v-data-table
+        :headers = "headers"
+        :items = "record"
+        class="elevation-1">
+        </v-data-table>
     </div>
 </template>
 
@@ -26,31 +13,44 @@ import connectAPI from "@/services/connectAPI";
 export default{
   name:'leaderboard',
   data: () => ({
-        users: '',
-        username: '',
-        user_point: 0
-  }),
+        // users: '',
+        // username: '',
+        // user_point: 0
+//   }),
 //   data(){
-//     return{
-//         data: [
-//             {
-//                 user: 'A',
-//                 score: 445
-//             },
-//             {
-//                 user: 'B',
-//                 score: 300
-//             },
-//             {
-//                 user: 'C',
-//                 score: 225
-//             },
-//             {
-//                 user: 'D',
-//                 score: 200
-//             }
-//         ]
-//     }
+    // return{
+        record: [
+            {
+                date: "2021/08/10-04:00:00",
+                item: 'คูปองส่วนลด 10%',
+                point: 50
+            },
+            {
+                date: "2021/08/08-09:00:00",
+                item: 'คูปองส่วนลด 50%',
+                point: 200
+            },
+            {
+                date: "2021/08/09-08:00:00",
+                item: 'คอร์สเรียนฟรี',
+                point: 400
+            },
+            {
+                date: "2021/08/07-07:00:00",
+                item: 'คูปองส่วนลด 30%',
+                point: 150
+            }
+        ],
+        headers:[{
+            text: 'วันที่',
+            align: 'start',
+            sortable: true,
+            value: 'date',
+        },
+        {text: 'ของที่เเลก', value: 'item'},
+        {text: 'คะเเนนที่ใช้', value: 'point'}
+        ],
+    }),
 //   },
   mounted(){
         this.getPoint()
