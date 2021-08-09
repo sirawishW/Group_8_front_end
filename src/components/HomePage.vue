@@ -58,7 +58,7 @@
               </v-card>
             </v-slide-item>
           </v-slide-group>
-          <v-item-group >
+          <v-item-group v-model="select">
     <div v-if="more_lessons" class="more-item">
       <v-row class="pl-10">
         <v-col

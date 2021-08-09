@@ -157,7 +157,7 @@ export default {
     item_remain: 0,
     current_id: null,
     point_after_redeem: 0,
-
+    userData: null,
     valid: false,
     name: "",
     description: "",
@@ -168,6 +168,10 @@ export default {
   mounted() {
     this.getData();
     this.getPoint();
+    if(window.localStorage.user){
+      this.userData = JSON.parse(window.localStorage.user)
+    }
+    console.log(this.userData.role.name);
   },
   methods: {
     async getData() {
