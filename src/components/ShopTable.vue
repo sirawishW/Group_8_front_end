@@ -15,6 +15,63 @@
         <v-card-title>
           <span class="text-h5">เพิ่มของรางวัล</span>
         </v-card-title>
+         <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  label="ชื่อของรางวัล"
+                  required :rules="[() => name.length > 0 || 'Required field']"
+                  v-model="name"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  label="เเต้มที่ใช้เเลก"
+                  required :rules="[() => cost.length > 0 || 'Required field']"
+                  v-model="cost"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  label="คำอธิบายรางวัล"
+                  v-model="description"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  label="จำนวนของรางวัล"
+                  required :rules="[() => cost.length >= 0 || 'Required field']"
+                  v-model="stock"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-file-input
+                  label="เพิ่มรูป"
+                  prepend-icon="mdi-camera"
+                  required :rules="[() => img !== null || 'Required field']"
+                  v-model="img"
+                ></v-file-input>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click="addDialog = false">
+            Close
+          </v-btn>
+          <v-btn color="blue darken-1" text @click="addDialog = false; add()">
+            Save
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="editDialog" max-width="600px">
+      <v-card>
+        <v-card-title>
+          <span class="text-h5">เเก้ไขของรางวัล</span>
+        </v-card-title>
         <v-card-text>
           <v-container>
             <v-row>
@@ -58,11 +115,11 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="addDialog = false">
-            Close
+          <v-btn color="blue darken-1" text @click="editDialog = false">
+            ปิด
           </v-btn>
-          <v-btn color="blue darken-1" text @click="addDialog = false; add()">
-            Save
+          <v-btn color="blue darken-1" text @click="editDialog = false; remove()">
+            บันทึก
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -102,13 +159,14 @@
                 <v-btn v-else disabled>สินค้าหมด</v-btn>
                 <v-btn
                   icon
-                  @click="edit(item, index)"
+                  @click="editDialog = true"
                 >
                   <v-icon v-if="userData && userData == 'Admin'">mdi-pencil</v-icon>
                 </v-btn>
                 <v-btn
                   icon
-                  @click="remove()"
+                  @click="deleteDialog = true;
+                  item_id = item.id"
                 >
                   <v-icon v-if="userData && userData == 'Admin'">mdi-delete</v-icon>
                 </v-btn>
@@ -138,6 +196,16 @@
         </v-card>
       </v-dialog>
     </v-item-group>
+    <v-dialog v-model="deleteDialog" height="450" width="450">
+        <v-card>
+          <v-card-title>ยืนยันการลบ</v-card-title>
+          <v-card-text
+            >ของรางวัลนี้จะถูกลบทันที</v-card-text
+          >
+          <v-btn color="primary" text @click="deleteDialog = false; remove()">ลบ</v-btn>
+          <v-btn color="primaty" text @click="deleteDialog = false">ยกเลิก</v-btn>
+        </v-card>
+      </v-dialog>
   </div>
 </template>
 
@@ -150,6 +218,8 @@ export default {
     model: "",
     dialog: false,
     addDialog: false,
+    editDialog: false,
+    deleteDialog: false,
     item_id: "",
     item_name: "",
     point_cost: 0,
@@ -203,20 +273,26 @@ export default {
         location.reload();
       }
     },
-    // edit(item, index) {
-    //   await connectAPI.putAPI("shop-items" + this.item_id, {});
-    // },
-    // remove(item, index){
-
-    // }
+    async edit() {
+      // await connectAPI.putAPI("shop-items" + this.item_id, {});
+    },
+    async remove(){
+      // console.log(this.item_id)
+      await connectAPI.deleteAPI("shop-items/", this.item_id)
+      alert("ลบของรางวัลสำเร็จ")
+      location.reload()
+    },
     async add(){
-        await connectAPI.postAPI("shop-items/", { 
+        await connectAPI.postAPI("shop-items", { 
             item_name: this.name,
             point_cost: this.cost,
             item_description: this.description,
             number: this.stock,
             image: this.img 
         })
+        alert("เพิ่มของรางวัลสำเร็จ")
+        this.getData()
+        location.reload()
     },
   },
 };

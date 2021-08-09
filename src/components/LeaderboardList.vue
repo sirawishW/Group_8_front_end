@@ -19,6 +19,24 @@
         </v-simple-table>
         <br>
         <br>
+         <h1>ตารางการใช้คะเเนน</h1>
+        <v-simple-table>
+            <thead class="head">
+                <tr>
+                    <th class="text-left">อันดับ</th>
+                    <th class="text-left">ชื่อผู้ใช้</th>
+                    <th>คะเเนน</th>
+                    <th>วันที่</th>
+                </tr>
+            </thead>
+            <tbody class="body">
+                <tr v-for="(user, index) in users" :key="index">
+                    <td class="text-left">{{ index+1 }}</td>
+                    <td class="text-left">{{ user.username }}</td>
+                    <td>{{ user.point }}</td>
+                </tr>
+            </tbody>
+        </v-simple-table>
     </div>
 </template>
 
@@ -71,5 +89,8 @@ export default{
 <style lang="scss"scoped>
 .body{
     background-color: #D5F3FE;
+}
+h1{
+    text-align: center;
 }
 </style>
