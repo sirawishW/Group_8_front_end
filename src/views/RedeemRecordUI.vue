@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="head">ตารางเเสดงการเเลกสินค้า</h1>
+        <h1 class="head">ตารางเเสดงการเเลกสินค้า/ได้เเต้ม</h1>
        <redeem-record />
     </div>
 </template>

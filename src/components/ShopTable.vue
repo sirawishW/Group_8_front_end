@@ -10,7 +10,7 @@
         align="center"
         style="margin-bottom: 30px"
         v-if="userData && userData == 'Student'"
-        >ประวัติการเเลกของรางวัล</v-btn
+        >ประวัติการเเลกของรางวัล/การได้เเต้ม</v-btn
       >
       <v-btn
         style="margin-bottom: 30px"
@@ -294,10 +294,10 @@ export default {
           point: this.point_after_redeem,
         });
         await connectAPI.getAPI("users/" + this.current_id).then((res) => {
-          this.current_user = res;
+          this.current_user = res
         });
-        await connectAPI.putAPI("shop-items/" + this.item_id, {
-          number: this.item_remain,
+        await connectAPI.putAPIWithToken("shop-items/" + this.item_id, {
+          number: this.item_remain
         });
         await connectAPI.postAPI("histories", {
           point: this.point_cost,
@@ -311,21 +311,23 @@ export default {
       }
     },
     async edit() {
-      if ((this.name == "", this.point == 0, this.cost == 0, this.stock == 0)) {
+      if (this.name == "", this.point == 0, this.cost == 0, this.stock == 0) {
         alert(
           "กรุณาใส่ข้อมูลให้ครบทุกช่อง ยกเว้นช่องคำอธิบายรางวัล อาจใส่หรือไม่ใส่ก็ได้"
         );
         return;
       }
-      await connectAPI.putAPI("shop-items/" + this.item_id, {
+      else{
+        await connectAPI.putAPIWithToken("shop-items/" + this.item_id, {
         item_name: this.name,
         point_cost: this.cost,
         item_description: this.description,
         number: this.stock,
-      });
-      alert("เเก้ไขสำเร็จ");
-      this.getData();
-      location.reload();
+        });
+        alert("เเก้ไขสำเร็จ");
+        this.getData();
+        location.reload();
+        }
     },
     async remove() {
       await connectAPI.deleteAPI("shop-items/", this.item_id);
@@ -333,22 +335,23 @@ export default {
       location.reload();
     },
     async add() {
-      if ((this.name == "", this.point == 0, this.cost == 0, this.stock == 0)) {
+      if (this.name == "", this.point == 0, this.cost == 0, this.stock == 0) {
         alert(
           "กรุณาใส่ข้อมูลให้ครบทุกช่อง ยกเว้นช่องคำอธิบายรางวัล อาจใส่หรือไม่ใส่ก็ได้"
         );
-        return;
       }
-      await connectAPI.postAPI("shop-items", {
+      else{
+        await connectAPI.postAPI("shop-items", {
         item_name: this.name,
         point_cost: this.cost,
         item_description: this.description,
         number: this.stock,
-        src: "discountCoupon.png",
-      });
-      alert("เพิ่มของรางวัลสำเร็จ");
-      this.getData();
-      location.reload();
+          src: "discountCoupon.png",
+        });
+        alert("เพิ่มของรางวัลสำเร็จ");
+        this.getData();
+        location.reload();
+        }
     },
   },
 };

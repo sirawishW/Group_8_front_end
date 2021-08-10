@@ -25,6 +25,7 @@ export default {
         value: "created_at",
       },
       { text: "ของที่เเลก", value: "details" },
+      { text: "ประเภท" ,  value: "type"  },
       { text: "คะเเนนที่ใช้", value: "point" },
     ],
   }),
@@ -42,7 +43,6 @@ export default {
             res.histories[i].created_at = moment(res.histories[i].created_at).format("MMMM Do YYYY, h:mm:ss a")
             this.record.push(res.histories[i]);
         }
-        console.log(this.record);
       });
     },
   },

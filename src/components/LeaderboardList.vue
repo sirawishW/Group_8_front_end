@@ -32,7 +32,7 @@ export default{
         {text: 'ชื่อผู้ใข้', value: 'users_permissions_user.username'},
         {text: 'ประเภท', value: 'type'},
         {text: 'รายละเอียด', value: 'details'},
-        {text: 'คะเเนนที่ใช้', value: 'point'}
+        {text: 'คะเเนนที่ใช้/คะเเนนที่ได้', value: 'point'}
         ],
   }),
   mounted(){
