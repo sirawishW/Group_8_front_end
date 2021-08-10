@@ -13,53 +13,34 @@ import connectAPI from "@/services/connectAPI";
 export default{
   name:'leaderboard',
   data: () => ({
-        // users: '',
-        // username: '',
-        // user_point: 0
-//   }),
-//   data(){
-    // return{
-        record: [
-            {
-                date: "2021/08/10-04:00:00",
-                item: 'คูปองส่วนลด 10%',
-                point: 50
-            },
-            {
-                date: "2021/08/08-09:00:00",
-                item: 'คูปองส่วนลด 50%',
-                point: 200
-            },
-            {
-                date: "2021/08/09-08:00:00",
-                item: 'คอร์สเรียนฟรี',
-                point: 400
-            },
-            {
-                date: "2021/08/07-07:00:00",
-                item: 'คูปองส่วนลด 30%',
-                point: 150
-            }
-        ],
+      current_user: [],
+      record: [],
+
         headers:[{
             text: 'วันที่',
             align: 'start',
             sortable: true,
-            value: 'date',
+            value: 'created_at',
         },
-        {text: 'ของที่เเลก', value: 'item'},
+        {text: 'ของที่เเลก', value: 'details'},
         {text: 'คะเเนนที่ใช้', value: 'point'}
         ],
     }),
 //   },
   mounted(){
-        this.getPoint()
+        if(window.localStorage.user){
+          this.current_user = JSON.parse(window.localStorage.user)
+        }
+        this.getData()
     },
   methods:{
-    async getPoint(){
-        await connectAPI.getAPIWithToken("users").then((res) =>{
-            this.username = res.username
-            this.user_point = res.point
+    async getData(){
+        await connectAPI.getAPI("users/" + this.current_user.id).then((res) => {
+            this.current_user = res.histories
+            for(var i = 0;i < res.histories.length;i++){
+                this.record.push(res.histories[i])
+            }
+            console.log(this.record)
         })
     },
   },

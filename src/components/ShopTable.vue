@@ -211,6 +211,7 @@ export default {
     user_point: 0,
     item_remain: 0,
     current_id: null,
+    current_user: null,
     point_after_redeem: 0,
     userData: null,
     valid: false,
@@ -250,9 +251,18 @@ export default {
         await connectAPI.putAPI("users/" + this.current_id, {
           point: this.point_after_redeem,
         });
+        await connectAPI.getAPI("users/" + this.current_id).then((res) =>{
+          this.current_user = res
+        })
         await connectAPI.putAPI("shop-items/" + this.item_id, {
           number: this.item_remain,
         });
+        await connectAPI.postAPI("histories", {
+          point: this.point_cost,
+          type: 'loss',
+          users_permissions_user: this.current_user,
+          details: this.item_name,
+        })
         alert("เเลกเปลี่ยนสำเร็จ");
         this.dialog = false;
         location.reload();
@@ -281,12 +291,6 @@ export default {
           item_description: this.description,
           number: this.stock,
           src: 'discountCoupon.png'
-        })
-        await connectAPI.postAPI("histories",{
-          point: this.point_cost,
-          type: 'loss',
-          // user_permissions_user: ,
-          details: this.item_name,
         })
         alert("เพิ่มของรางวัลสำเร็จ")
         this.getData()

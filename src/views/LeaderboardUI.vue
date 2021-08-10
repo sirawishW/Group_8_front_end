@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="head">ตารางเเลกคะเเนน</h1>
+        <h1 class="head">ตารางการได้คะเเนนเเละการใช้คะเเนน</h1>
        <LeaderboardList />
     </div>
 </template>
