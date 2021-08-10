@@ -81,6 +81,13 @@ export default {
               this.score += 10
               if(this.current_question + 1 > this.question.length -1){
                   this.popup2 = true
+                  
+                  var u = this.user_point/this.set
+                  if (u != 100){
+                    this.score += this.user_point
+                  }
+                    
+
                   console.log('All Question Answered')
 
                   this.put()
@@ -113,7 +120,6 @@ export default {
                 var setta = res 
                 console.log(res)
                 for (var i = 0 ; i < res.length ; i++){
-
                     if (res[i].set_quiz == this.set){
                         this.arr = res[i]
                     }
@@ -124,13 +130,17 @@ export default {
             await connectAPI.getAPIWithToken("users/me").then((res) =>{
                 this.user_point = res.point
                 this.user_id = res.id;
+                console.log(this.user_point)
+
             })
         },
         async put(){
-            await connectAPI.putAPI("users/"+this.user_id,{point:this.score, set_quizs:this.arr}).then((res) =>{
+
+            await connectAPI.putAPI("users/"+this.user_id,{point:this.score}).then((res) =>{
                 
                 console.log(this.arr)
                 connectAPI.postAPI("histories",{point:res.point,type:"gain",detail:"ได้คะแนนจากควิซ"})
+
 
             })
         },
