@@ -50,7 +50,11 @@ export default{
         });
     },
     async putAPI(path, body){
-        return axios.put(url + path , body
+        return axios.put(url + path , body ,{
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem("me")
+            }
+        }
         ).then((res) => {
             return res.data;
         });
