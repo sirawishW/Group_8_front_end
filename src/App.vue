@@ -212,7 +212,7 @@
         <v-list-item>
           <v-list-item-title class="d-flex justify-center"
             >คะแนน :
-            {{ this.userData ? this.userData.point : 0 }}</v-list-item-title
+            {{ this.userData.point ? this.userData.point : 0 }}</v-list-item-title
           >
         </v-list-item>
         <v-list-item>
@@ -255,7 +255,7 @@
                 <v-list-item-title
                   ><v-icon x-small class="pr-2"
                     >mdi-checkbox-blank-circle</v-icon
-                  >{{ itemQuiz.title }}</v-list-item-title
+                  >แบบทดสอบที่ : {{ itemQuiz.set_quiz }}</v-list-item-title
                 >
               </v-list-item-content>
             </v-list-item>
@@ -413,7 +413,7 @@ this.refreshKey = true;
         .getAPIWithToken("users/" + this.checkData.id)
         .then((res) => {
           this.userLessons = res.lessons;
-          this.userQuizzes = res.quizzes;
+          this.userQuizzes = res.set_quizs;
         })
         .catch((e) => {
           console.log(e);

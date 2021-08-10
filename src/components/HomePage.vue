@@ -165,20 +165,20 @@
             >
           </v-row>
           <v-slide-group
-            v-model="quizModel"
+            v-model="count"
             class="pa-4"
             show-arrows
             v-if="!more_quizzes"
           >
             <v-slide-item
-              v-for="n in quizs"
+              v-for="n in set_quizs"
               :key="n"
               v-slot="{ active, toggle }"
             >
               <v-card
-                :color="active ? '#77ACF1' : '#FFAA4C'"
+                :color="active ? '#77ACF1' : '#88e0bc'"
                 class="ma-6"
-                :height="active ? '280' : '250'"
+                height="250"
                 width="250"
                 @click="toggle"
               >
@@ -190,23 +190,25 @@
                   primary-title
                   class="subtitle-1 d-flex justify-center pb-1 card-title"
                 >
-                  {{ n.title }}
+                  แบบทดสอบที่ : {{ n.set_quiz }}
                 </v-card-title>
-                <v-card-text class="d-flex justify-start pt-0">
-                  <div style="width: 230px; overflow-y: hidden; height: 40px">
-                    {{ n.Description }}
-                  </div>
-                </v-card-text>
-                <v-card-actions class="d-flex justify-end">
-                  <v-btn
-                    color="black lighten-2"
-                    text
-                    @click="reserve"
-                    v-if="active"
-                  >
-                    เข้าสู่แบบทดสอบ
-                  </v-btn>
-                </v-card-actions>
+                <v-card-actions class="d-flex justify-center mt-2 pt-0">
+                        <v-btn
+                          color="#794C74"
+                          depressed
+                          @click="changePage"
+                          v-if="active && userData"
+                          dark
+                        >
+                          เข้าสู่แบบทดสอบ
+                        </v-btn>
+                        <v-btn
+                          text
+                          v-if="active && !userData"
+                        >
+                          กรุณาเข้าสู่ระบบ
+                        </v-btn>
+                      </v-card-actions>
                 <v-row class="fill-height" align="center" justify="center">
                   <v-scale-transition>
                     <v-icon
@@ -220,13 +222,13 @@
               </v-card>
             </v-slide-item>
           </v-slide-group>
-          <v-item-group>
+          <v-item-group v-model="count">
             <div v-if="more_quizzes" class="more-item">
               <v-row class="pl-10">
-                <v-col v-for="n in quizzes" :key="n" cols="10" md="3">
+                <v-col v-for="n in set_quizs" :key="n" cols="10" md="3">
                   <v-item v-slot="{ active, toggle }">
                     <v-card
-                      :color="active ? '#FFD66B' : '#88e0bc'"
+                      :color="active ? '#77ACF1' : '#88e0bc'"
                       class="ma-6"
                       height="250"
                       width="250"
@@ -240,31 +242,23 @@
                         primary-title
                         class="subtitle-1 d-flex justify-center pb-1 card-title"
                       >
-                        {{ n.title }}
+                       แบบทดสอบที่ : {{ n.set_quiz }}
                       </v-card-title>
-                      <v-card-text
-                        class="d-flex justify-start pt-0"
-                        v-if="!active"
-                      >
-                        <div
-                          style="
-                            width: 230px;
-                            overflow-y: hidden;
-                            max-height: 40px;
-                          "
-                        >
-                          {{ n.Description }}
-                        </div>
-                      </v-card-text>
                       <v-card-actions class="d-flex justify-center mt-2 pt-0">
                         <v-btn
                           color="#794C74"
                           depressed
                           @click="changePage"
-                          v-if="active"
+                          v-if="active && userData"
                           dark
                         >
                           เข้าสู่แบบทดสอบ
+                        </v-btn>
+                        <v-btn
+                          text
+                          v-if="active && !userData"
+                        >
+                          กรุณาเข้าสู่ระบบ
                         </v-btn>
                       </v-card-actions>
                     </v-card>
@@ -357,7 +351,7 @@ export default {
     lessons: null,
     quizs: null,
     select: null,
-    quizModel: "",
+    quizModel: null,
     more_lessons: false,
     more_quizzes: false,
     add_Dialog: false,
@@ -368,9 +362,12 @@ export default {
     picture: "",
     userData: "",
     snackbar: "",
+    count:null,
+    set_quizs: null,
   }),
   mounted() {
     this.getLessons();
+    this.getSetQuiz();
     if(window.localStorage.user){
       this.userData = JSON.parse(window.localStorage.user)
     }
@@ -412,6 +409,18 @@ export default {
     moreQuizzes() {
       this.more_quizzes = !this.more_quizzes;
     },
+      async getSetQuiz(){
+      await connectAPI.getAPI("set-quizs").then((res) => {
+        
+        this.set_quizs = res;
+        console.log(this.count)
+        
+      })
+    },
+    changePage1(){
+      
+      this.$router.push("/quizz_entrance"+String(Number(this.count)+1));
+    }
   },
 };
 </script>
