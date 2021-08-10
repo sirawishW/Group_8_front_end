@@ -87,11 +87,9 @@ export default {
                     this.score += this.user_point
                   }
                     
-
                   console.log('All Question Answered')
-
                   this.put()
-                  
+                
                   return
                   
               }
@@ -137,9 +135,8 @@ export default {
         async put(){
 
             await connectAPI.putAPI("users/"+this.user_id,{point:this.score}).then((res) =>{
-                
-                console.log(this.arr)
-                connectAPI.postAPI("histories",{point:res.point,type:"gain",detail:"ได้คะแนนจากควิซ"})
+
+                connectAPI.postAPI("histories",{point:res.point,type:"gain",details:"ได้คะแนนจากควิซ"})
 
 
             })
