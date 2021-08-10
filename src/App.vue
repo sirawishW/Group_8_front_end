@@ -171,8 +171,8 @@
         </div></v-card
       >
     </v-dialog>
-    <v-navigation-drawer v-model="drawer" absolute right
-      ><v-list class="pt-7">
+    <v-navigation-drawer v-model="drawer" absolute right class="bg-profile"
+      ><v-list class="pt-7 ">
         <v-icon
           @click="drawer = false"
           class="pt-8"
@@ -211,13 +211,13 @@
       <v-list nav dense>
         <v-list-item>
           <v-list-item-title class="d-flex justify-center"
-            >คะแนน :
-            {{ this.userData.point ? this.userData.point : 0 }}</v-list-item-title
+            ><img src="./assets/25533.svg" alt="" width="30" height="30" class="pr-1" /><div class="pt-2"> คะแนน :
+            {{ this.userData.point ? this.userData.point : 0 }}</div></v-list-item-title
           >
         </v-list-item>
         <v-list-item>
           <v-list-item-title class="d-flex justify-center"
-            >บทเรียนที่เรียนแล้ว</v-list-item-title
+            ><v-icon color="blue" small class="pr-2">mdi-check-bold</v-icon> บทเรียนที่เรียนแล้ว</v-list-item-title
           >
         </v-list-item>
         <v-list
@@ -227,6 +227,8 @@
           class="ml-3"
         >
           <v-list-item-group class="pl-1">
+            <div v-if="userLessons.length <= 0" class="pl-15" style="font-size: 10px; color: grey">ไม่มีบทเรียนที่เรียนแล้ว</div> 
+            <div v-else>
             <v-list-item v-for="item in userLessons" :key="item">
               <v-list-item-content>
                 <v-list-item-title
@@ -235,12 +237,12 @@
                   >{{ item.title }}</v-list-item-title
                 >
               </v-list-item-content>
-            </v-list-item>
+            </v-list-item></div>
           </v-list-item-group>
         </v-list>
         <v-list-item>
-          <v-list-item-title class="d-flex justify-center"
-            >แบบทดสอบที่ทำแล้ว</v-list-item-title
+          <v-list-item-title class="d-flex justify-center mt-10 pb-3"
+            ><v-icon color="blue" small class="pr-2">mdi-check-bold</v-icon>แบบทดสอบที่ทำแล้ว</v-list-item-title
           >
         </v-list-item>
         <v-list
@@ -250,6 +252,8 @@
           class="ml-3"
         >
           <v-list-item-group class="pl-1">
+            <div v-if="userQuizzes.length <= 0" class="pl-15" style="font-size: 10px; color: grey">ไม่มีแบบทดสอบที่ทำแล้ว</div> 
+            <div v-else>
             <v-list-item v-for="itemQuiz in userQuizzes" :key="itemQuiz">
               <v-list-item-content>
                 <v-list-item-title
@@ -258,7 +262,7 @@
                   >แบบทดสอบที่ : {{ itemQuiz.set_quiz }}</v-list-item-title
                 >
               </v-list-item-content>
-            </v-list-item>
+            </v-list-item></div>
           </v-list-item-group>
         </v-list>
       </v-list>
@@ -454,5 +458,9 @@ this.refreshKey = true;
     rgba(34, 193, 195, 0.011642156862745057) 69%,
     rgba(45, 60, 253, 1) 100%
   );
+}
+.bg-profile{
+  background: rgb(152,136,224);
+background: linear-gradient(0deg, rgb(45, 60, 253, 1) 15%, rgba(255,255,255,1) 50%);
 }
 </style>
