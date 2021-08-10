@@ -3,27 +3,23 @@
       <div class="center">
 
           <div class="header">
-
             <h2>{{ current_question+1 }}. </h2> 
-          
           </div>
 
           <div class="header">
-
-            <h2>{{ question_array[current_question].question }} </h2>
-          
+            <h2>{{ question[current_question].question }} </h2>
           </div>
           
       </div>
             
         <div class="center">
-          <button class="button" @click="checkAnswer(question_array[current_question].one)">{{ question_array[current_question].one }}</button>
-          <button class="button2" @click="checkAnswer(question_array[current_question].two)">{{ question_array[current_question].two }}</button>
+          <button class="button" @click="checkAnswer(question[current_question].option_1)">{{ question[current_question].option_1 }}</button>
+          <button class="button2" @click="checkAnswer(question[current_question].option_2)">{{ question[current_question].option_2 }}</button>
         </div>
 
         <div class="center">
-          <button class="button3" @click="checkAnswer(question_array[current_question].three)">{{ question_array[current_question].three }}</button>
-          <button class="button4" @click="checkAnswer(question_array[current_question].four)">{{ question_array[current_question].four }}</button>      
+          <button class="button3" @click="checkAnswer(question[current_question].option_3)">{{ question[current_question].option_3 }}</button>
+          <button class="button4" @click="checkAnswer(question[current_question].option_4)">{{ question[current_question].option_4 }}</button>      
         </div>
 
       <transition name="fade">
@@ -56,7 +52,8 @@
 <script>
 import connectAPI from "@/services/connectAPI";
 export default {
-  props:['question_array'],
+//   props:['question_array'],
+  props:{set:String},
   data(){
       return{
           current_question:0,
@@ -64,19 +61,29 @@ export default {
           popup2:false,
           count_question:0,
           correct_question:0,
-        //   question:''
+          question:'',
+          settu:'',
+          score:0,
+          user_id:'',
+          arr:[],
+          
       }
   },
   mounted(){
+        this.settu = window.localStorage.getItem("setto")
         this.getData()
         this.getPoint()
+        console.log(window.localStorage.getItem("setto"))
     },
   methods:{
       checkAnswer(answer){
-          if(answer == this.question_array[this.current_question].answer){
-              if(this.current_question + 1 > this.question_array.length -1){
+          if(answer == this.question[this.current_question].answer){
+              this.score += 10
+              if(this.current_question + 1 > this.question.length -1){
                   this.popup2 = true
                   console.log('All Question Answered')
+
+                  this.put()
                   
                   return
                   
@@ -87,7 +94,7 @@ export default {
                 this.popup = false
                 this.popup2 = false
               },1000)
-              console.log('Correct ! ')
+             
               this.correct_question+1
               
 
@@ -96,15 +103,38 @@ export default {
           }
       },
         async getData(){
-            await connectAPI.getAPI("/quizzes").then((res) =>{
+            this.settu = window.localStorage.getItem("setto")
+            await connectAPI.getAPI("quizzes?Set=" + this.set).then((res) =>{
                 this.question = res
-            })            
+                console.log(window.localStorage.setto)
+                
+            })         
+            await connectAPI.getAPI("set-quizs").then((res)=>{
+                var setta = res 
+                console.log(res)
+                for (var i = 0 ; i < res.length ; i++){
+
+                    if (res[i].set_quiz == this.set){
+                        this.arr = res[i]
+                    }
+                }
+            })   
         },
         async getPoint(){
             await connectAPI.getAPIWithToken("users/me").then((res) =>{
                 this.user_point = res.point
+                this.user_id = res.id;
             })
         },
+        async put(){
+            await connectAPI.putAPI("users/"+this.user_id,{point:this.score, set_quizs:this.arr}).then((res) =>{
+                
+                console.log(this.arr)
+                connectAPI.postAPI("histories",{point:res.point,type:"gain",detail:"ได้คะแนนจากควิซ"})
+
+            })
+        },
+        
   }
 }
 </script>

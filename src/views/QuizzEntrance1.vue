@@ -1,8 +1,13 @@
 <template>
   <div class="quizz_entrance">
-    <div v-if="started">
+    <!-- <div v-if="started">
       <quizcompo :question_array="data_array[`question_1`]" />
     </div>
+    <div v-else> -->
+
+    <div v-if="started">
+      <quizcompo :set="1" />
+      </div>
     <div v-else>
 
     <div class="header">
@@ -11,7 +16,8 @@
 
       <div class="center">
         <div id="container">
-          <button @click="started = true; quest = 1"><img src="@/assets/9.png" ></button>
+          <button @click="started = true; quest = 1;"><img src="@/assets/9.png" ></button>
+
         </div>
       </div>
 
@@ -26,13 +32,14 @@
 
 <script>
 import quizcompo from '../components/quizcompo.vue'
-import jsondata from '../json/default.json'
+// import jsondata from '../json/default.json'
 export default {
   components:{quizcompo},
   data(){
     return{
       started:false,
-      data_array: jsondata || [],
+      set_what: '',
+      // data_array: jsondata || [],
       quest:1
     }
   }

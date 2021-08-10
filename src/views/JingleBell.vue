@@ -53,6 +53,7 @@ export default {
     return{
       popup:false,
       correct:0,
+      user_id:'',
       options:{
  
         dropzoneSelector: '.block',
@@ -71,6 +72,7 @@ export default {
           if(this.correct == 23){
             this.popup = true
             console.log('complete');
+
             return
           }
         },
@@ -268,7 +270,8 @@ export default {
         },
       ]
     }
-  }
+  },
+ 
 }
 </script>
 
