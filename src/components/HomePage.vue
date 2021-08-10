@@ -202,7 +202,7 @@
                 width="250"
                 @click="toggle"
               >
-                <v-img height="150" src="../assets/MjUzMzcyNTg4.jpg"></v-img>
+                <v-img height="150" src="../assets/_113692689_quiz_1.png"></v-img>
                 <v-card-title
                   primary-title
                   class="subtitle-1 d-flex justify-center pb-1 card-title"
@@ -250,7 +250,7 @@
                     >
                       <v-img
                         height="150"
-                        src="../assets/MjUzMzcyNTg4.jpg"
+                        src="../assets/_113692689_quiz_1.png"
                       ></v-img>
                       <v-card-title
                         primary-title
@@ -387,7 +387,9 @@ export default {
     this.getSetQuiz();
     if (window.localStorage.user) {
       this.userData = JSON.parse(window.localStorage.user);
+      console.log(this.userData);
     }
+    
   },
   watch:{
     filter(){
@@ -415,6 +417,7 @@ export default {
           this.snackbar = true;
           this.add_Dialog = false;
           this.getLessons();
+          location.reload();
         });
     },
     cancelForm() {
@@ -427,10 +430,10 @@ export default {
     },
     async getLessons() {
       await connectAPI.getAPI("lessons?_sort=updated_at:ASC").then((res) => {
+        this.lessons = res;
         if(this.userData){
         var findObj;
         var id = this.userData.id;
-        this.lessons = res;
         for (var i = 0; i < res.length; i++) {
           findObj = res[i].users_permissions_users.filter(function (user) {
             return user.id == id;

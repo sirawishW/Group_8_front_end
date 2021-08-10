@@ -55,13 +55,13 @@
         <v-list color="#001E6C" dark class="pt-0">
           <v-list-item v-if="!checkData">
             <v-list-item-title
-              @click="(dialog = true), (typeOfDialog = 'login'), (drawer = false)"
+              @click="(dialog = true), (typeOfDialog = 'login'), (drawer = false), loginError = false, regisError = false"
               ><v-btn text>เข้าสู่ระบบ</v-btn></v-list-item-title
             >
           </v-list-item>
           <v-list-item v-if="!checkData">
             <v-list-item-title
-              @click="(dialog = true), (typeOfDialog = 'regis'), (drawer = false)"
+              @click="(dialog = true), (typeOfDialog = 'regis'), (drawer = false), loginError = false, regisError = false"
               ><v-btn text>สมัครสมาชิก</v-btn></v-list-item-title
             >
           </v-list-item>

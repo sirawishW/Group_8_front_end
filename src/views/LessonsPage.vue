@@ -6,13 +6,13 @@
       </div>
 
       <div class="text-h5 pl-5 pt-10">
-        <h5 class="bg-white pl-2 rounded-xl">{{ this.lesson.title }}</h5>
+        <h5 class="bg-white pl-2 rounded-xl">{{ this.lesson ? this.lesson.title : 0}}</h5>
       </div>
       <div class="d-flex justify-center pt-5">
         <iframe
           width="560"
           height="315"
-          :src="this.lesson.link"
+          :src="this.lesson ? this.lesson.link : ''"
           title="YouTube video player"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -20,7 +20,7 @@
         ></iframe>
       </div>
       <v-card-text class="ml-15 bg-white rounded-xl">
-        {{ this.lesson.Description }}
+        {{ this.lesson ? this.lesson.Description : '' }}
       </v-card-text>
       <div class="d-flex justify-center pb-10 mt-16">
         <v-btn
