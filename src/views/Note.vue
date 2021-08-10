@@ -6,7 +6,7 @@
 
     <div class="center">
       
-    <div v-if="check_piano.length == 1">
+    <div v-if="check_piano==100">
         <div style="margin-right:50px;" >
           <div id="container">
             <router-link to="/numalee" >
@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    <div v-if="check_piano.length == 2">
+    <div v-if="check_piano == 200">
         <div style="margin-right:50px;" >
           <div id="container">
             <router-link to="/numalee" >
@@ -50,7 +50,7 @@ export default {
   data(){
       return{
           user_id:'',
-          check_piano:[],
+          check_piano:0,
       }
   },
   mounted(){
@@ -72,7 +72,7 @@ export default {
                 this.user_point = res.point
                 this.user_id = res.id;
                 console.log(res.set_quizs)
-                this.check_piano = res.set_quizs
+                this.check_piano = res.point
                 console.log(this.check_piano)
               })
             }
