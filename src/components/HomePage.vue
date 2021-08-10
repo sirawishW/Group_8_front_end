@@ -27,7 +27,7 @@
                     << ย่อลง
                   </h4></v-btn
                 >
-                <v-list v-if="more_lessons">
+                <v-list v-if="userData && more_lessons && userData.role.name == 'Student'">
                   <v-list-item>
             <v-checkbox
               v-model="filter"
@@ -213,7 +213,7 @@
                   <v-btn
                     color="#794C74"
                     depressed
-                    @click="changePage"
+                    @click="changePage1"
                     v-if="active && userData"
                     dark
                   >
@@ -427,6 +427,7 @@ export default {
     },
     async getLessons() {
       await connectAPI.getAPI("lessons?_sort=updated_at:ASC").then((res) => {
+        if(this.userData){
         var findObj;
         var id = this.userData.id;
         this.lessons = res;
@@ -438,6 +439,10 @@ export default {
             res[i].active = 0;
             this.lessonsNotSort.push(res[i]);
           }
+        }
+        }else{
+          this.itemLessions = res
+          this.allLessons = res
         }
         
       });
