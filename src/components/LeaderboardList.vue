@@ -1,19 +1,8 @@
 <template>
     <div>
         <v-data-table
-        dense
-        :headers = "headers"
-        :items = "data"
-        item-key="name"
-        class="elevation-1">
-        </v-data-table>
-        <br>
-        <br>
-        <h1>ตารางใช้คะเเนน</h1>
-        <v-data-table
-        dense
-        :headers = "headers"
-        :items = "data"
+        :headers = "headers2"
+        :items = "history"
         item-key="name"
         class="elevation-1">
         </v-data-table>
@@ -26,39 +15,29 @@ export default{
   name:'leaderboard',
   data: () => ({
         users: '',
-        username: '',
-        user_point: 0
+        history: [],
+        user_point: 0,
+
+        headers2:[{
+            text: 'วันที่',
+            align: 'start',
+            sortable: true,
+            value: 'created_at',
+        },
+        {text: 'ชื่อผู้ใข้', value: 'users_permissions_user.username'},
+        {text: 'ประเภท', value: 'type'},
+        {text: 'รายละเอียด', value: 'details'},
+        {text: 'คะเเนนที่ใช้', value: 'point'}
+        ],
   }),
-//   data(){
-//     return{
-//         data: [
-//             {
-//                 user: 'A',
-//                 score: 445
-//             },
-//             {
-//                 user: 'B',
-//                 score: 300
-//             },
-//             {
-//                 user: 'C',
-//                 score: 225
-//             },
-//             {
-//                 user: 'D',
-//                 score: 200
-//             }
-//         ]
-//     }
-//   },
   mounted(){
         this.getPoint()
     },
   methods:{
     async getPoint(){
-        await connectAPI.getAPIWithToken("users").then((res) =>{
-            this.username = res.username
-            this.user_point = res.point
+        await connectAPI.getAPI("histories").then((res) =>{
+            this.history = res
+            console.log(res)
         })
     },
   },
@@ -69,8 +48,5 @@ export default{
 <style lang="scss"scoped>
 .body{
     background-color: #D5F3FE;
-}
-h1{
-    text-align: center;
 }
 </style>
