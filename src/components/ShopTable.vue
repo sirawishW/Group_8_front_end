@@ -1,13 +1,22 @@
 <template>
   <div>
     <h1 class="head">เเลกคะเเนน</h1>
-    <p class="display" v-if="userData && userData == 'Student'">คุณมีคะเเนนสะสม {{ user_point }} คะเเนน</p>
+    <p class="display" v-if="userData && userData == 'Student'">
+      คุณมีคะเเนนสะสม {{ user_point }} คะเเนน
+    </p>
     <v-row align="center" justify="space-around">
-      <v-btn to="/RedeemRecord" align="center" style="margin-bottom: 30px"
-       v-if="userData && userData == 'Student'"  >ประวัติการเเลกของรางวัล</v-btn
+      <v-btn
+        to="/RedeemRecord"
+        align="center"
+        style="margin-bottom: 30px"
+        v-if="userData && userData == 'Student'"
+        >ประวัติการเเลกของรางวัล</v-btn
       >
-      <v-btn style="margin-bottom: 30px" @click="addDialog = true"
-       v-if="userData && userData == 'Admin'" >เพิ่มของรางวัล</v-btn
+      <v-btn
+        style="margin-bottom: 30px"
+        @click="addDialog = true"
+        v-if="userData && userData == 'Admin'"
+        >เพิ่มของรางวัล</v-btn
       >
     </v-row>
     <v-dialog v-model="addDialog" max-width="600px">
@@ -15,20 +24,22 @@
         <v-card-title>
           <span class="text-h5">เพิ่มของรางวัล</span>
         </v-card-title>
-         <v-card-text>
+        <v-card-text>
           <v-container>
             <v-row>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
                   label="ชื่อของรางวัล"
-                  required :rules="[() => name.length > 0 || 'Required field']"
+                  required
+                  :rules="[() => name.length > 0 || 'Required field']"
                   v-model="name"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
                   label="เเต้มที่ใช้เเลก"
-                  required :rules="[() => cost.length > 0 || 'Required field']"
+                  required
+                  :rules="[() => cost.length > 0 || 'Required field']"
                   v-model="cost"
                 ></v-text-field>
               </v-col>
@@ -41,7 +52,8 @@
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
                   label="จำนวนของรางวัล"
-                  required :rules="[() => cost.length >= 0 || 'Required field']"
+                  required
+                  :rules="[() => cost.length >= 0 || 'Required field']"
                   v-model="stock"
                 ></v-text-field>
               </v-col>
@@ -53,7 +65,14 @@
           <v-btn color="blue darken-1" text @click="addDialog = false">
             Close
           </v-btn>
-          <v-btn color="blue darken-1" text @click="addDialog = false; add()">
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="
+              addDialog = false;
+              add();
+            "
+          >
             Save
           </v-btn>
         </v-card-actions>
@@ -70,14 +89,16 @@
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
                   label="ชื่อของรางวัล"
-                  required :rules="[() => name.length > 0 || 'Required field']"
+                  required
+                  :rules="[() => name.length > 0 || 'Required field']"
                   v-model="name"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
                   label="เเต้มที่ใช้เเลก"
-                  required :rules="[() => cost.length > 0 || 'Required field']"
+                  required
+                  :rules="[() => cost.length > 0 || 'Required field']"
                   v-model="cost"
                 ></v-text-field>
               </v-col>
@@ -90,7 +111,8 @@
               <v-col cols="12" sm="6" md="4">
                 <v-text-field
                   label="จำนวนของรางวัล"
-                  required :rules="[() => cost.length >= 0 || 'Required field']"
+                  required
+                  :rules="[() => cost.length >= 0 || 'Required field']"
                   v-model="stock"
                 ></v-text-field>
               </v-col>
@@ -102,7 +124,14 @@
           <v-btn color="blue darken-1" text @click="editDialog = false">
             ปิด
           </v-btn>
-          <v-btn color="blue darken-1" text @click="editDialog = false; edit()">
+          <v-btn
+            color="blue darken-1"
+            text
+            @click="
+              editDialog = false;
+              edit();
+            "
+          >
             บันทึก
           </v-btn>
         </v-card-actions>
@@ -128,7 +157,7 @@
               <v-card-text>คงเหลือ {{ item.number }}</v-card-text>
               <v-card-actions>
                 <v-btn
-                  v-if="item.number !== 0 && userData =='Student'"
+                  v-if="item.number !== 0 && userData == 'Student'"
                   @click.stop="
                     dialog = true;
                     item_name = item.item_name;
@@ -143,17 +172,25 @@
                 <v-btn v-else disabled>สินค้าหมด</v-btn>
                 <v-btn
                   icon
-                  @click="editDialog = true;
-                  item_id = item.id"
+                  @click="
+                    editDialog = true;
+                    item_id = item.id;
+                  "
                 >
-                  <v-icon v-if="userData && userData == 'Admin'">mdi-pencil</v-icon>
+                  <v-icon v-if="userData && userData == 'Admin'"
+                    >mdi-pencil</v-icon
+                  >
                 </v-btn>
                 <v-btn
                   icon
-                  @click="deleteDialog = true;
-                  item_id = item.id"
+                  @click="
+                    deleteDialog = true;
+                    item_id = item.id;
+                  "
                 >
-                  <v-icon v-if="userData && userData == 'Admin'">mdi-delete</v-icon>
+                  <v-icon v-if="userData && userData == 'Admin'"
+                    >mdi-delete</v-icon
+                  >
                 </v-btn>
                 <v-spacer></v-spacer>
               </v-card-actions>
@@ -182,15 +219,21 @@
       </v-dialog>
     </v-item-group>
     <v-dialog v-model="deleteDialog" height="450" width="450">
-        <v-card>
-          <v-card-title>ยืนยันการลบ</v-card-title>
-          <v-card-text
-            >ของรางวัลนี้จะถูกลบทันที</v-card-text
-          >
-          <v-btn color="primary" text @click="deleteDialog = false; remove()">ลบ</v-btn>
-          <v-btn color="primaty" text @click="deleteDialog = false">ยกเลิก</v-btn>
-        </v-card>
-      </v-dialog>
+      <v-card>
+        <v-card-title>ยืนยันการลบ</v-card-title>
+        <v-card-text>ของรางวัลนี้จะถูกลบทันที</v-card-text>
+        <v-btn
+          color="primary"
+          text
+          @click="
+            deleteDialog = false;
+            remove();
+          "
+          >ลบ</v-btn
+        >
+        <v-btn color="primaty" text @click="deleteDialog = false">ยกเลิก</v-btn>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -218,15 +261,14 @@ export default {
     name: "",
     description: "",
     cost: 0,
-    img: null,
     stock: 0,
   }),
   mounted() {
     this.getData();
     this.getPoint();
-    if(window.localStorage.user){
-      var data = JSON.parse(window.localStorage.user)
-      this.userData = data.role.name
+    if (window.localStorage.user) {
+      var data = JSON.parse(window.localStorage.user);
+      this.userData = data.role.name;
     }
   },
   methods: {
@@ -251,50 +293,62 @@ export default {
         await connectAPI.putAPI("users/" + this.current_id, {
           point: this.point_after_redeem,
         });
-        await connectAPI.getAPI("users/" + this.current_id).then((res) =>{
-          this.current_user = res
-        })
+        await connectAPI.getAPI("users/" + this.current_id).then((res) => {
+          this.current_user = res;
+        });
         await connectAPI.putAPI("shop-items/" + this.item_id, {
           number: this.item_remain,
         });
         await connectAPI.postAPI("histories", {
           point: this.point_cost,
-          type: 'loss',
+          type: "loss",
           users_permissions_user: this.current_user,
           details: this.item_name,
-        })
+        });
         alert("เเลกเปลี่ยนสำเร็จ");
         this.dialog = false;
         location.reload();
       }
     },
     async edit() {
-      await connectAPI.putAPI("shop-items/" + this.item_id,{ 
-            item_name: this.name,
-            point_cost: this.cost,
-            item_description: this.description,
-            number: this.stock,
-      })
-      alert("เเก้ไขสำเร็จ")
-      this.getData()
-      location.reload()
+      if ((this.name == "", this.point == 0, this.cost == 0, this.stock == 0)) {
+        alert(
+          "กรุณาใส่ข้อมูลให้ครบทุกช่อง ยกเว้นช่องคำอธิบายรางวัล อาจใส่หรือไม่ใส่ก็ได้"
+        );
+        return;
+      }
+      await connectAPI.putAPI("shop-items/" + this.item_id, {
+        item_name: this.name,
+        point_cost: this.cost,
+        item_description: this.description,
+        number: this.stock,
+      });
+      alert("เเก้ไขสำเร็จ");
+      this.getData();
+      location.reload();
     },
-    async remove(){
-      await connectAPI.deleteAPI("shop-items/", this.item_id)
-      alert("ลบของรางวัลสำเร็จ")
-      location.reload()
+    async remove() {
+      await connectAPI.deleteAPI("shop-items/", this.item_id);
+      alert("ลบของรางวัลสำเร็จ");
+      location.reload();
     },
-    async add(){
-        await connectAPI.postAPI("shop-items", { 
-          item_name: this.name,
-          point_cost: this.cost,
-          item_description: this.description,
-          number: this.stock,
-          src: 'discountCoupon.png'
-        })
-        alert("เพิ่มของรางวัลสำเร็จ")
-        this.getData()
-        location.reload()
+    async add() {
+      if ((this.name == "", this.point == 0, this.cost == 0, this.stock == 0)) {
+        alert(
+          "กรุณาใส่ข้อมูลให้ครบทุกช่อง ยกเว้นช่องคำอธิบายรางวัล อาจใส่หรือไม่ใส่ก็ได้"
+        );
+        return;
+      }
+      await connectAPI.postAPI("shop-items", {
+        item_name: this.name,
+        point_cost: this.cost,
+        item_description: this.description,
+        number: this.stock,
+        src: "discountCoupon.png",
+      });
+      alert("เพิ่มของรางวัลสำเร็จ");
+      this.getData();
+      location.reload();
     },
   },
 };
